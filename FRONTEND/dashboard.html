@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Swap Skills</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #fff5f8;
+            min-height: 100vh;
+        }
+
+        nav {
+            background: white;
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: #e94b82;
+        }
+
+        .logout {
+            text-decoration: none;
+            color: #e94b82;
+            font-weight: 700;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 20px 40px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            color: #222;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 span {
+            color: #e94b82;
+        }
+
+        .hero p {
+            color: #777;
+            font-size: 18px;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            padding: 40px 7%;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: white;
+            width: 280px;
+            padding: 35px 25px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+        }
+
+        .card h2 {
+            color: #e94b82;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">Swap Skills</div>
+        <a href="index.html" class="logout">Logout</a>
+    </nav>
+
+    <section class="hero">
+        <h1>Welcome to <span>Swap Skills</span>!</h1>
+        <p>Learn skills. Share skills. Grow together.</p>
+    </section>
+    <div class="cards">
+
+    <div class="card">
+        <h2>💻 Java</h2>
+        <p>Learn Java programming from skilled members.</p>
+    </div>
+
+    <div class="card">
+        <h2>🐍 Python</h2>
+        <p>Improve your Python programming skills.</p>
+    </div>
+
+    <div class="card">
+        <h2>🌐 Web Development</h2>
+        <p>Learn HTML, CSS and JavaScript.</p>
+    </div>
+
+    <div class="card">
+        <h2>🎨 UI/UX Design</h2>
+        <p>Learn creative and user-friendly design.</p>
+    </div>
+
+</div>
+    <div style="text-align:center; margin:40px 20px;">
+    <h2>Find a Skill</h2>
+
+    <input
+        type="text"
+        placeholder="Search for a skill..."
+        style="padding:15px; width:300px; border-radius:10px; border:1px solid #ddd;"
+    >
+
+    <button
+        style="padding:15px 25px; margin-left:10px; border:none; border-radius:10px; background:#e94b82; color:white; cursor:pointer;"
+    >
+        Search
+    </button>
+    <br><br>
+
+<a href="skills.html" style="
+    display:inline-block;
+    padding:12px 25px;
+    background:#e94b82;
+    color:white;
+    text-decoration:none;
+    border-radius:10px;
+    font-weight:bold;
+">
+    Explore All Skills →
+</a>
+</div>
+
+    <section class="cards">
+
+        <div class="card">
+            <h2>Learn Skills</h2>
+            <p>
+                Discover new skills and learn from people
+                in our community.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>Share Skills</h2>
+            <p>
+                Share what you know and help others
+                improve their skills.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>Grow Together</h2>
+            <p>
+                Connect with learners, exchange knowledge
+                and grow together.
+            </p>
+        </div>
+
+    </section>
+<script src="./js/dashboard.js"></script>
+</body>
+</html>

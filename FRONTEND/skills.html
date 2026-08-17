@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Skills | Swap Skills</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #fff5f8;
+        }
+
+        nav {
+            background: white;
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: #e94b82;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #e94b82;
+            font-weight: 700;
+        }
+
+        .heading {
+            text-align: center;
+            padding: 60px 20px 30px;
+        }
+
+        .heading h1 {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .heading h1 span {
+            color: #e94b82;
+        }
+
+        .heading p {
+            color: #777;
+        }
+
+        .skills {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            padding: 30px 7%;
+        }
+
+        .skill-card {
+            background: white;
+            width: 260px;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+        }
+
+        .skill-card h2 {
+            color: #e94b82;
+            margin-bottom: 12px;
+        }
+
+        .skill-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .learn-btn {
+            display: inline-block;
+            padding: 11px 22px;
+            background: #e94b82;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">Swap Skills</div>
+        <a href="dashboard.html">Dashboard</a>
+    </nav>
+
+    <section class="heading">
+        <h1>Explore <span>Skills</span></h1>
+        <p>Discover skills and connect with people who can teach you.</p>
+    </section>
+
+    <section class="skills">
+
+        <div class="skill-card">
+            <h2>Java</h2>
+            <p>Learn Java programming and object-oriented concepts.</p>
+            <a href="java.html" class="learn-btn">Learn</a>
+        </div>
+
+        <div class="skill-card">
+            <h2>Python</h2>
+            <p>Improve your Python programming and problem-solving skills.</p>
+            <a href="python.html" class="learn-btn">Learn</a>
+        </div>
+
+        <div class="skill-card">
+            <h2>Web Development</h2>
+            <p>Learn HTML, CSS and JavaScript to build websites.</p>
+            <a href="web.html" class="learn-btn">Learn</a>
+        </div>
+
+        <div class="skill-card">
+            <h2>UI/UX Design</h2>
+            <p>Learn how to create attractive and user-friendly designs.</p>
+            <a href="uiux.html" class="learn-btn">Learn</a>
+        </div>
+
+    </section>
+
+</body>
+</html>

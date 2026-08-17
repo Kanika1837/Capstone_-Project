@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Swap Skills</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #fff4f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .login-box {
+            width: 900px;
+            max-width: 100%;
+            min-height: 520px;
+            background: white;
+            border-radius: 30px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            box-shadow: 0 20px 60px rgba(80, 30, 50, 0.12);
+        }
+
+        .welcome {
+            background: linear-gradient(145deg, #ee4d83, #f58eaf);
+            color: white;
+            padding: 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 65px;
+        }
+
+        .welcome h1 {
+            font-size: 45px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .welcome p {
+            line-height: 1.7;
+            opacity: 0.9;
+        }
+
+        .form-area {
+            padding: 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-area h2 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #777;
+            margin-bottom: 28px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            outline: none;
+            margin-bottom: 18px;
+        }
+
+        input:focus {
+            border-color: #ee4d83;
+        }
+
+        .forgot {
+            text-align: right;
+            margin-top: -8px;
+            margin-bottom: 20px;
+        }
+
+        .forgot a {
+            color: #ee4d83;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #ee4d83;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 22px;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .signup-link a {
+            color: #ee4d83;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        @media (max-width: 700px) {
+            .login-box {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome {
+                padding: 35px;
+            }
+
+            .welcome h1 {
+                font-size: 35px;
+            }
+
+            .welcome .logo {
+                margin-bottom: 25px;
+            }
+
+            .form-area {
+                padding: 35px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <div class="welcome">
+
+            <div class="logo">
+                Swap Skills
+            </div>
+
+            <h1>
+                Welcome<br>
+                back!
+            </h1>
+
+            <p>
+                Continue your skill journey.
+                Learn, share and grow with
+                the Swap Skills community.
+            </p>
+
+        </div>
+
+
+        <div class="form-area">
+
+            <h2>Welcome Back</h2>
+
+            <p class="subtitle">
+                Login to continue your journey.
+            </p>
+
+            <form>
+
+                <label>Email</label>
+
+                <input
+                    type="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+                <div class="forgot">
+                    <a href="#">Forgot Password?</a>
+                </div>
+
+                <button class="login-button" type="submit">
+                    Login →
+                </button>
+
+            </form>
+
+            <p class="signup-link">
+                Don't have an account?
+                <a href="signup.html">Sign Up</a>
+            </p>
+
+        </div>
+
+    </div>
+<script src="js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Skills | Swap Skill</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f8f9fc;
+            color: #333;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            color: #172b4d;
+            margin-bottom: 25px;
+        }
+
+        .back-btn {
+            background: #f4c95d;
+            color: #172b4d;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .form-box {
+            background: #f8f9fc;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        input {
+            padding: 12px;
+            width: 70%;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .add-btn {
+            background: #172b4d;
+            color: white;
+        }
+
+        .search {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 14px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #172b4d;
+            color: white;
+        }
+
+        .edit-btn {
+            background: #f4c95d;
+            color: #172b4d;
+            margin-right: 5px;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        @media (max-width: 600px) {
+            input {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Manage Skills</h1>
+
+    <button class="back-btn" onclick="history.back()">← Back</button>
+
+    <div class="form-box">
+        <h3>Add New Skill</h3>
+        <br>
+
+        <input type="text" id="skillInput" placeholder="Enter skill name">
+
+        <button class="add-btn" onclick="addSkill()">Add Skill</button>
+    </div>
+
+    <input
+        type="text"
+        id="searchInput"
+        class="search"
+        placeholder="Search skills..."
+        onkeyup="displaySkills()"
+    >
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Skill Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody id="skillsTable"></tbody>
+    </table>
+
+</div>
+
+<script>
+
+    let skills = [
+        { id: 1, name: "Java" },
+        { id: 2, name: "Python" },
+        { id: 3, name: "Web Design" }
+    ];
+
+    function displaySkills() {
+
+        const table = document.getElementById("skillsTable");
+        const search = document.getElementById("searchInput").value.toLowerCase();
+
+        table.innerHTML = "";
+
+        skills
+            .filter(skill => skill.name.toLowerCase().includes(search))
+            .forEach(skill => {
+
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td>${skill.id}</td>
+                    <td>${skill.name}</td>
+                    <td>
+                        <button class="edit-btn"
+                        onclick="editSkill(${skill.id})">Edit</button>
+
+                        <button class="delete-btn"
+                        onclick="deleteSkill(${skill.id})">Delete</button>
+                    </td>
+                `;
+
+                table.appendChild(row);
+            });
+    }
+
+    function addSkill() {
+
+        const input = document.getElementById("skillInput");
+        const name = input.value.trim();
+
+        if (name === "") {
+            alert("Please enter a skill name");
+            return;
+        }
+
+        const exists = skills.some(
+            skill => skill.name.toLowerCase() === name.toLowerCase()
+        );
+
+        if (exists) {
+            alert("Skill already exists");
+            return;
+        }
+
+        const newSkill = {
+            id: skills.length
+                ? Math.max(...skills.map(skill => skill.id)) + 1
+                : 1,
+            name: name
+        };
+
+        skills.push(newSkill);
+
+        input.value = "";
+
+        displaySkills();
+
+        alert("Skill added successfully!");
+    }
+
+    function editSkill(id) {
+
+        const skill = skills.find(skill => skill.id === id);
+
+        const newName = prompt("Enter new skill name:", skill.name);
+
+        if (newName && newName.trim() !== "") {
+            skill.name = newName.trim();
+            displaySkills();
+        }
+    }
+
+    function deleteSkill(id) {
+
+        const confirmDelete = confirm("Are you sure you want to delete this skill?");
+
+        if (confirmDelete) {
+            skills = skills.filter(skill => skill.id !== id);
+            displaySkills();
+        }
+    }
+
+    displaySkills();
+
+</script>
+
+</body>
+</html>

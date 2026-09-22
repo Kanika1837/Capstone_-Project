@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Interview Preparation | SwapSkill</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #ffffff;
+            color: #172b4d;
+        }
+
+        header {
+            background: #ffffff;
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #172b4d;
+        }
+
+        .logo span {
+            color: #e5b93f;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #172b4d;
+            margin-left: 25px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #e5b93f;
+        }
+
+        .hero {
+            background: #172b4d;
+            color: white;
+            text-align: center;
+            padding: 65px 20px;
+        }
+
+        .hero h1 {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 18px;
+        }
+
+        .container {
+            padding: 45px 7%;
+        }
+
+        .container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 30px;
+        }
+
+        .modules {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .module-card {
+            background: #ffffff;
+            border: 1px solid #e8e8e8;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: 0.3s;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .module-card h3 {
+            margin-bottom: 15px;
+        }
+
+        .module-card p {
+            line-height: 1.6;
+            color: #555555;
+        }
+
+        .module-card button {
+            margin-top: 20px;
+            padding: 11px 20px;
+            border: none;
+            border-radius: 25px;
+            background: #e5b93f;
+            color: #172b4d;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .module-card button:hover {
+            background: #172b4d;
+            color: white;
+        }
+
+        #lessonArea {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background: #f8f8f8;
+            border-left: 5px solid #e5b93f;
+            border-radius: 10px;
+        }
+
+        #lessonArea h3 {
+            margin-bottom: 15px;
+        }
+
+        #lessonContent {
+            line-height: 1.8;
+            white-space: pre-line;
+        }
+
+        footer {
+            background: #172b4d;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 8px;
+                display: inline-block;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Swap<span>Skill</span></div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="skills.html">Explore Skills</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="login.html">Login</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1>Interview Preparation</h1>
+    <p>Prepare confidently for technical and HR interviews.</p>
+</section>
+
+<section class="container">
+    <h2>Learning Modules</h2>
+
+    <div class="modules">
+
+        <div class="module-card">
+            <h3>1. Self Introduction</h3>
+            <p>Learn how to introduce yourself confidently in an interview.</p>
+            <button onclick="showLesson(1)">Start Learning</button>
+        </div>
+
+        <div class="module-card">
+            <h3>2. HR Questions</h3>
+            <p>Practice common HR interview questions and answers.</p>
+            <button onclick="showLesson(2)">Start Learning</button>
+        </div>
+
+        <div class="module-card">
+            <h3>3. Technical Interview</h3>
+            <p>Prepare important questions from programming and computer science.</p>
+            <button onclick="showLesson(3)">Start Learning</button>
+        </div>
+
+        <div class="module-card">
+            <h3>4. Communication Skills</h3>
+            <p>Improve your speaking skills and answer questions clearly.</p>
+            <button onclick="showLesson(4)">Start Learning</button>
+        </div>
+
+        <div class="module-card">
+            <h3>5. Interview Etiquette</h3>
+            <p>Learn professional body language, dressing and interview manners.</p>
+            <button onclick="showLesson(5)">Start Learning</button>
+        </div>
+
+        <div class="module-card">
+            <h3>6. Mock Interview</h3>
+            <p>Practice interview questions and improve your confidence.</p>
+            <button onclick="showLesson(6)">Start Learning</button>
+        </div>
+
+    </div>
+
+    <div id="lessonArea">
+        <h3 id="lessonTitle"></h3>
+        <p id="lessonContent"></p>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 SwapSkill. Learn, Share and Grow Together.</p>
+</footer>
+
+<script>
+    function showLesson(moduleNumber) {
+        const lessonArea = document.getElementById("lessonArea");
+        const lessonTitle = document.getElementById("lessonTitle");
+        const lessonContent = document.getElementById("lessonContent");
+
+        const lessons = {
+            1: {
+                title: "Self Introduction",
+                content: `
+• Start with a polite greeting.
+• Tell your name.
+• Mention your college and department.
+• Explain your technical skills.
+• Mention your strengths.
+• Explain your career goal.
+
+Example:
+
+Good morning.
+My name is Chitra.
+I am currently pursuing Computer Science Engineering.
+I have basic knowledge of Java, Python and SQL.
+My goal is to become a successful software engineer.
+`
+            },
+
+            2: {
+                title: "Common HR Questions",
+                content: `
+• Tell me about yourself.
+• What are your strengths?
+• What are your weaknesses?
+• Why should we hire you?
+• Where do you see yourself in five years?
+• Why do you want to join our company?
+
+Tips:
+
+• Answer honestly.
+• Speak confidently.
+• Maintain eye contact.
+• Keep your answers short and clear.
+`
+            },
+
+            3: {
+                title: "Technical Interview",
+                content: `
+Important Technical Topics:
+
+• Programming basics.
+• Object-Oriented Programming.
+• Data Structures.
+• Database Management Systems.
+• Operating Systems.
+• Computer Networks.
+• Basic coding problems.
+
+Practice Tips:
+
+• Solve coding problems daily.
+• Understand the basic concepts.
+• Explain your logic clearly.
+• Revise important technical subjects.
+`
+            },
+
+            4: {
+                title: "Communication Skills",
+                content: `
+Communication Tips:
+
+• Speak clearly.
+• Maintain eye contact.
+• Listen carefully.
+• Avoid unnecessary words.
+• Use simple English.
+• Improve your vocabulary.
+• Practice speaking every day.
+
+Daily Practice:
+
+• Speak in English for five minutes.
+• Read English articles.
+• Watch English learning videos.
+• Record your voice and correct mistakes.
+`
+            },
+
+            5: {
+                title: "Interview Etiquette",
+                content: `
+Interview Etiquette:
+
+• Wear formal clothes.
+• Be punctual.
+• Greet the interviewer politely.
+• Keep your phone silent.
+• Sit with proper posture.
+• Listen carefully.
+• Do not interrupt the interviewer.
+• Thank the interviewer before leaving.
+`
+            },
+
+            6: {
+                title: "Mock Interview",
+                content: `
+Mock Interview Questions:
+
+• Introduce yourself.
+• Explain your favourite project.
+• Describe your technical skills.
+• Explain your strengths.
+• Describe a challenging situation.
+• Why should we hire you?
+• What are your career goals?
+• Do you have any questions for us?
+
+Practice Tips:
+
+• Practice in front of a mirror.
+• Record your answers.
+• Improve your body language.
+• Speak confidently.
+• Review your mistakes.
+`
+            }
+        };
+
+        lessonTitle.textContent = lessons[moduleNumber].title;
+        lessonContent.textContent = lessons[moduleNumber].content;
+
+        lessonArea.style.display = "block";
+        lessonArea.scrollIntoView({ behavior: "smooth" });
+    }
+</script>
+
+</body>
+</html>

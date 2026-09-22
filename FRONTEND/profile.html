@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile - SwapSkill</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #ffffff;
+            color: #172b4d;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 7%;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #e5b93f;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #172b4d;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #e5b93f;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 40px auto;
+        }
+
+        .profile-card {
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #eeeeee;
+            box-shadow: 0 5px 20px rgba(23, 43, 77, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .profile-icon {
+            width: 90px;
+            height: 90px;
+            background: #fff4c7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 45px;
+            margin: 0 auto 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .profile-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .detail-box {
+            padding: 18px;
+            background: #fafafa;
+            border-radius: 10px;
+        }
+
+        .detail-box strong {
+            display: block;
+            color: #777777;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .detail-box span {
+            font-weight: bold;
+            word-break: break-word;
+        }
+
+        .section-title {
+            margin-bottom: 18px;
+            font-size: 22px;
+        }
+
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .activity-card {
+            padding: 25px;
+            border: 1px solid #eeeeee;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(23, 43, 77, 0.07);
+        }
+
+        .activity-card h3 {
+            margin-bottom: 12px;
+        }
+
+        .activity-card p {
+            color: #555555;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .skill-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .skill-box {
+            padding: 22px;
+            background: #fafafa;
+            border-radius: 12px;
+            border: 1px solid #eeeeee;
+        }
+
+        .skill-box h3 {
+            margin-bottom: 15px;
+        }
+
+        .skill-box label {
+            display: block;
+            margin: 12px 0;
+            color: #333333;
+        }
+
+        .skill-box input {
+            margin-right: 10px;
+            accent-color: #e5b93f;
+        }
+
+        .save-button,
+        .accept-button,
+        .reject-button,
+        .conversation-button {
+            padding: 11px 18px;
+            border: none;
+            border-radius: 7px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .save-button {
+            display: block;
+            margin: 25px auto 0;
+            padding: 13px 30px;
+            background: #e5b93f;
+            color: #172b4d;
+        }
+
+        .save-button:hover {
+            background: #d4a92f;
+        }
+
+        .accept-button {
+            background: #d9f7df;
+            color: #176b2c;
+        }
+
+        .reject-button {
+            background: #ffe0e0;
+            color: #a32020;
+        }
+
+        .conversation-button {
+            background: #fff4c7;
+            color: #172b4d;
+            margin-top: 10px;
+        }
+
+        .accept-button:hover {
+            background: #bcefc7;
+        }
+
+        .reject-button:hover {
+            background: #ffcaca;
+        }
+
+        .conversation-button:hover {
+            background: #f6df91;
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .progress-box {
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 14px;
+            background: #eeeeee;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: #e5b93f;
+            transition: width 0.4s;
+        }
+
+        .request-card {
+            border: 1px solid #eeeeee;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            background: #fafafa;
+        }
+
+        .request-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .request-card p {
+            margin: 7px 0;
+            color: #555555;
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 15px;
+            background: #eeeeee;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .empty-message {
+            color: #777777;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .back-button {
+            display: block;
+            width: fit-content;
+            margin: 30px auto;
+            padding: 12px 25px;
+            background: #e5b93f;
+            color: #172b4d;
+            text-decoration: none;
+            border-radius: 7px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 750px) {
+            .profile-details,
+            .activity-grid,
+            .skill-form {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            Swap<span>Skill</span>
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="skills.html">Explore Skills</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="profile.html">My Profile</a>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <!-- PROFILE DETAILS -->
+
+        <div class="profile-card">
+
+            <div class="profile-icon">👤</div>
+
+            <h1 id="profileTitle">My Profile</h1>
+
+            <div class="profile-details">
+
+                <div class="detail-box">
+                    <strong>Full Name</strong>
+                    <span id="profileName">Loading...</span>
+                </div>
+
+                <div class="detail-box">
+                    <strong>Email Address</strong>
+                    <span id="profileEmail">Loading...</span>
+                </div>
+
+                <div class="detail-box">
+                    <strong>Account Role</strong>
+                    <span id="profileRole">Loading...</span>
+                </div>
+
+                <div class="detail-box">
+                    <strong>Account Status</strong>
+                    <span id="profileStatus">Loading...</span>
+                </div>
+
+                <div class="detail-box">
+                    <strong>Last Active</strong>
+                    <span id="lastActive">Loading...</span>
+                </div>
+
+                <div class="detail-box">
+                    <strong>Current Activity</strong>
+                    <span id="currentActivity">Loading...</span>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- SKILL PREFERENCES -->
+
+        <div class="profile-card">
+
+            <h2 class="section-title">🎯 My Skill Preferences</h2>
+
+            <div class="skill-form">
+
+                <div class="skill-box">
+
+                    <h3>👨‍🏫 I Can Teach</h3>
+
+                    <label>
+                        <input type="checkbox" name="teachingSkill" value="Java">
+                        Java
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="teachingSkill" value="Python">
+                        Python
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="teachingSkill" value="Web Development">
+                        Web Development
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="teachingSkill" value="Cyber Security">
+                        Cyber Security
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="teachingSkill" value="Database SQL">
+                        Database SQL
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="teachingSkill" value="Graphic Design">
+                        Graphic Design
+                    </label>
+
+                </div>
+
+                <div class="skill-box">
+
+                    <h3>📚 I Want to Learn</h3>
+
+                    <label>
+                        <input type="checkbox" name="learningSkill" value="Java">
+                        Java
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="learningSkill" value="Python">
+                        Python
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="learningSkill" value="Web Development">
+                        Web Development
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="learningSkill" value="Cyber Security">
+                        Cyber Security
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="learningSkill" value="Database SQL">
+                        Database SQL
+                    </label>
+
+                    <label>
+                        <input type="checkbox" name="learningSkill" value="Graphic Design">
+                        Graphic Design
+                    </label>
+
+                </div>
+
+            </div>
+
+            <button class="save-button" onclick="saveSkills()">
+                Save My Skills
+            </button>
+
+            <p class="message" id="saveMessage"></p>
+
+        </div>
+
+
+        <!-- RECEIVED MENTOR REQUESTS -->
+
+        <div class="profile-card">
+
+            <h2 class="section-title">📩 Mentor Requests Received</h2>
+
+            <div id="receivedRequests">
+                <p class="empty-message">Loading requests...</p>
+            </div>
+
+        </div>
+
+
+        <!-- SENT REQUESTS -->
+
+        <div class="profile-card">
+
+            <h2 class="section-title">📤 My Sent Requests</h2>
+
+            <div id="sentRequests">
+                <p class="empty-message">Loading requests...</p>
+            </div>
+
+        </div>
+
+
+        <!-- LEARNING ACTIVITIES -->
+
+        <div class="profile-card">
+
+            <h2 class="section-title">📚 Learning & Teaching Activities</h2>
+
+            <div class="activity-grid">
+
+                <div class="activity-card">
+                    <h3>✅ Completed Courses</h3>
+                    <p id="completedCourses">No completed courses yet.</p>
+                </div>
+
+                <div class="activity-card">
+                    <h3>📖 Currently Learning</h3>
+                    <p id="learningCourses">No learning activity yet.</p>
+                </div>
+
+                <div class="activity-card">
+                    <h3>👨‍🏫 Skills I Teach</h3>
+                    <p id="teachingSkills">No teaching skills added yet.</p>
+                </div>
+
+                <div class="activity-card">
+                    <h3>🔄 Skill Swaps</h3>
+                    <p id="swappedCourses">No skill swaps yet.</p>
+                </div>
+
+            </div>
+
+            <div class="progress-box">
+
+                <h3>📊 Current Course Progress</h3>
+
+                <p>
+                    <span id="courseProgress">0</span>% completed
+                </p>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <a href="dashboard.html" class="back-button">
+            Back to Dashboard
+        </a>
+
+    </div>
+
+
+    <script>
+
+        let currentUser = null;
+
+
+        // LOAD PROFILE
+
+        async function loadProfile() {
+
+            const storedUser = localStorage.getItem("user");
+
+            if (!storedUser) {
+                alert("Please login first.");
+                window.location.href = "login.html";
+                return;
+            }
+
+            try {
+
+                currentUser = JSON.parse(storedUser);
+
+                const response = await fetch(
+                    `http://localhost:5000/api/users/${currentUser.id}`
+                );
+
+                if (!response.ok) {
+                    throw new Error("Profile fetch failed");
+                }
+
+                const latestUser = await response.json();
+
+                currentUser = latestUser;
+
+                document.getElementById("profileTitle").innerText =
+                    (latestUser.name || "User") + "'s Profile";
+
+                document.getElementById("profileName").innerText =
+                    latestUser.name || "Not available";
+
+                document.getElementById("profileEmail").innerText =
+                    latestUser.email || "Not available";
+
+                document.getElementById("profileRole").innerText =
+                    latestUser.role || "User";
+
+                document.getElementById("profileStatus").innerText =
+                    latestUser.status || "Offline";
+
+                document.getElementById("lastActive").innerText =
+                    latestUser.last_active
+                        ? new Date(latestUser.last_active).toLocaleString("en-IN")
+                        : "Not available";
+
+                document.getElementById("currentActivity").innerText =
+                    latestUser.current_activity || "No activity";
+
+                document.getElementById("completedCourses").innerText =
+                    latestUser.completed_courses ||
+                    latestUser.completed_course ||
+                    "No completed courses yet.";
+
+                document.getElementById("learningCourses").innerText =
+                    latestUser.learning_courses ||
+                    "No learning activity yet.";
+
+                document.getElementById("teachingSkills").innerText =
+                    latestUser.teaching_skills ||
+                    "No teaching skills added yet.";
+
+                document.getElementById("swappedCourses").innerText =
+                    latestUser.swapped_courses ||
+                    "No skill swaps yet.";
+
+                const progress = Number(latestUser.course_progress) || 0;
+
+                document.getElementById("courseProgress").innerText = progress;
+
+                document.getElementById("progressFill").style.width =
+                    progress + "%";
+
+                localStorage.setItem("user", JSON.stringify(latestUser));
+
+                loadSavedSkills();
+
+                loadReceivedRequests();
+
+                loadSentRequests();
+
+            } catch (error) {
+
+                console.error("Profile loading error:", error);
+
+                alert("Unable to load profile. Please check your backend.");
+
+                loadSavedSkills();
+            }
+        }
+
+
+        // SAVE SKILLS
+
+        async function saveSkills() {
+
+            const teachingSkills = Array.from(
+                document.querySelectorAll(
+                    'input[name="teachingSkill"]:checked'
+                )
+            ).map(skill => skill.value);
+
+            const learningSkills = Array.from(
+                document.querySelectorAll(
+                    'input[name="learningSkill"]:checked'
+                )
+            ).map(skill => skill.value);
+
+            if (teachingSkills.length === 0 && learningSkills.length === 0) {
+                alert("Please select at least one skill.");
+                return;
+            }
+
+            if (!currentUser || !currentUser.id) {
+                alert("User details not found. Please login again.");
+                return;
+            }
+
+            try {
+
+                const response = await fetch(
+                    `http://localhost:5000/api/users/skills/${currentUser.id}`,
+                    {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            teachingSkills: teachingSkills,
+                            learningSkills: learningSkills
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(
+                        data.message || "Failed to save skills"
+                    );
+                }
+
+                currentUser = data.user;
+
+                localStorage.setItem(
+                    "user",
+                    JSON.stringify(currentUser)
+                );
+
+                document.getElementById("teachingSkills").innerText =
+                    teachingSkills.length > 0
+                        ? teachingSkills.join(", ")
+                        : "No teaching skills added yet.";
+
+                document.getElementById("learningCourses").innerText =
+                    learningSkills.length > 0
+                        ? "Interested in: " + learningSkills.join(", ")
+                        : "No learning activity yet.";
+
+                document.getElementById("saveMessage").innerText =
+                    "✅ Your skills have been saved successfully!";
+
+                loadReceivedRequests();
+
+            } catch (error) {
+
+                console.error("Save skills error:", error);
+
+                alert(
+                    "Unable to save skills. Please check your backend."
+                );
+            }
+        }
+
+
+        // LOAD SAVED SKILLS
+
+        function loadSavedSkills() {
+
+            const teachingSkillsText = currentUser?.teaching_skills || "";
+            const learningSkillsText = currentUser?.learning_skills || "";
+
+            const teachingSkills = teachingSkillsText
+                ? teachingSkillsText.split(",").map(skill => skill.trim())
+                : [];
+
+            const learningSkills = learningSkillsText
+                ? learningSkillsText.split(",").map(skill => skill.trim())
+                : [];
+
+            document.querySelectorAll(
+                'input[name="teachingSkill"]'
+            ).forEach(input => {
+                input.checked = teachingSkills.includes(input.value);
+            });
+
+            document.querySelectorAll(
+                'input[name="learningSkill"]'
+            ).forEach(input => {
+                input.checked = learningSkills.includes(input.value);
+            });
+
+            document.getElementById("teachingSkills").innerText =
+                teachingSkills.length > 0
+                    ? teachingSkills.join(", ")
+                    : "No teaching skills added yet.";
+
+            document.getElementById("learningCourses").innerText =
+                learningSkills.length > 0
+                    ? "Interested in: " + learningSkills.join(", ")
+                    : "No learning activity yet.";
+        }
+
+
+        // LOAD RECEIVED REQUESTS
+
+        async function loadReceivedRequests() {
+
+            if (!currentUser || !currentUser.id) {
+                return;
+            }
+
+            const container = document.getElementById("receivedRequests");
+
+            try {
+
+                const response = await fetch(
+                    `http://localhost:5000/api/requests/mentor/${currentUser.id}`
+                );
+
+                if (!response.ok) {
+                    throw new Error("Failed to load received requests");
+                }
+
+                const requests = await response.json();
+
+                if (requests.length === 0) {
+                    container.innerHTML =
+                        `<p class="empty-message">
+                            No mentor requests received yet.
+                        </p>`;
+                    return;
+                }
+
+                container.innerHTML = "";
+
+                requests.forEach(request => {
+
+                    const card = document.createElement("div");
+
+                    card.className = "request-card";
+
+                    const status = request.status || "Pending";
+
+                    let buttons = "";
+
+                    if (status === "Pending") {
+
+                        buttons = `
+                            <div class="request-actions">
+                                <button class="accept-button"
+                                    onclick="updateRequestStatus(${request.id}, 'Accepted')">
+                                    Accept
+                                </button>
+
+                                <button class="reject-button"
+                                    onclick="updateRequestStatus(${request.id}, 'Rejected')">
+                                    Reject
+                                </button>
+                            </div>
+                        `;
+
+                    } else if (status === "Accepted") {
+
+                        buttons = `
+                            <div class="request-actions">
+                                <button class="conversation-button"
+                                    onclick="openConversation(${request.sender_id})">
+                                    💬 Conversation
+                                </button>
+                            </div>
+                        `;
+
+                    }
+
+                    card.innerHTML = `
+                        <h3>📩 ${escapeHtml(request.sender_name || "Unknown User")}</h3>
+
+                        <p>
+                            <strong>Email:</strong>
+                            ${escapeHtml(request.sender_email || "Not available")}
+                        </p>
+
+                        <p>
+                            <strong>Skill:</strong>
+                            ${escapeHtml(request.skill_name || "Not available")}
+                        </p>
+
+                        <p>
+                            <strong>Status:</strong>
+                            <span class="status">${escapeHtml(status)}</span>
+                        </p>
+
+                        ${buttons}
+                    `;
+
+                    container.appendChild(card);
+
+                });
+
+            } catch (error) {
+
+                console.error("Received requests error:", error);
+
+                container.innerHTML =
+                    `<p class="empty-message">
+                        Unable to load received requests.
+                    </p>`;
+            }
+        }
+
+
+        // LOAD SENT REQUESTS
+
+        async function loadSentRequests() {
+
+            if (!currentUser || !currentUser.id) {
+                return;
+            }
+
+            const container = document.getElementById("sentRequests");
+
+            try {
+
+                const response = await fetch(
+                    `http://localhost:5000/api/requests/user/${currentUser.id}`
+                );
+
+                if (!response.ok) {
+                    throw new Error("Failed to load sent requests");
+                }
+
+                const requests = await response.json();
+
+                if (requests.length === 0) {
+                    container.innerHTML =
+                        `<p class="empty-message">
+                            You have not sent any requests yet.
+                        </p>`;
+                    return;
+                }
+
+                container.innerHTML = "";
+
+                requests.forEach(request => {
+
+                    const card = document.createElement("div");
+
+                    card.className = "request-card";
+
+                    const status = request.status || "Pending";
+
+                    let buttons = "";
+
+                    if (status === "Accepted") {
+
+                        buttons = `
+                            <div class="request-actions">
+                                <button class="conversation-button"
+                                    onclick="openConversation(${request.receiver_id})">
+                                    💬 Conversation
+                                </button>
+                            </div>
+                        `;
+
+                    }
+
+                    card.innerHTML = `
+                        <h3>👤 ${escapeHtml(request.receiver_name || "Unknown Mentor")}</h3>
+
+                        <p>
+                            <strong>Email:</strong>
+                            ${escapeHtml(request.receiver_email || "Not available")}
+                        </p>
+
+                        <p>
+                            <strong>Skill:</strong>
+                            ${escapeHtml(request.skill_name || "Not available")}
+                        </p>
+
+                        <p>
+                            <strong>Status:</strong>
+                            <span class="status">${escapeHtml(status)}</span>
+                        </p>
+
+                        ${buttons}
+                    `;
+
+                    container.appendChild(card);
+
+                });
+
+            } catch (error) {
+
+                console.error("Sent requests error:", error);
+
+                container.innerHTML =
+                    `<p class="empty-message">
+                        Unable to load sent requests.
+                    </p>`;
+            }
+        }
+
+
+        // ACCEPT OR REJECT REQUEST
+
+        async function updateRequestStatus(requestId, status) {
+
+            if (!currentUser || !currentUser.id) {
+                alert("Please login again.");
+                return;
+            }
+
+            const confirmation = confirm(
+                `Are you sure you want to ${status.toLowerCase()} this request?`
+            );
+
+            if (!confirmation) {
+                return;
+            }
+
+            try {
+
+                const response = await fetch(
+                    `http://localhost:5000/api/requests/${requestId}/status`,
+                    {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            status: status,
+                            mentorId: currentUser.id
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(
+                        data.message || "Failed to update request"
+                    );
+                }
+
+                alert(data.message);
+
+                loadReceivedRequests();
+
+            } catch (error) {
+
+                console.error("Update request error:", error);
+
+                alert(
+                    error.message ||
+                    "Unable to update request status."
+                );
+            }
+        }
+
+
+        // CONVERSATION BUTTON
+
+        function openConversation(otherUserId) {
+
+            localStorage.setItem(
+                "conversationUserId",
+                otherUserId
+            );
+
+            window.location.href = "conversation.html";
+        }
+
+
+        // BASIC HTML SAFETY
+
+        function escapeHtml(value) {
+
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+
+        loadProfile();
+
+    </script>
+
+</body>
+
+</html>

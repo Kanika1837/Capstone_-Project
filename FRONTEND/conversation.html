@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>Conversation | SwapSkill</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background: #ffffff;
+        color: #17233c;
+    }
+
+    header {
+        height: 70px;
+        background: #17233c;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 40px;
+    }
+
+    .logo {
+        font-size: 26px;
+        font-weight: bold;
+    }
+
+    .back-btn {
+        background: #f4c542;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        color: #17233c;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 30px auto;
+        padding: 20px;
+    }
+
+    .conversation-card {
+        border: 1px solid #e5e5e5;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .conversation-header {
+        background: #f8f4df;
+        padding: 25px;
+    }
+
+    .conversation-header h2 {
+        margin-bottom: 8px;
+    }
+
+    .conversation-header p {
+        color: #666;
+    }
+
+    .messages {
+        min-height: 350px;
+        max-height: 450px;
+        overflow-y: auto;
+        padding: 25px;
+        background: #fafafa;
+    }
+
+    .empty-message {
+        text-align: center;
+        color: #777;
+        padding-top: 120px;
+    }
+
+    .message {
+        max-width: 70%;
+        padding: 12px 16px;
+        margin-bottom: 12px;
+        border-radius: 12px;
+        line-height: 1.5;
+    }
+
+    .my-message {
+        margin-left: auto;
+        background: #17233c;
+        color: white;
+    }
+
+    .other-message {
+        margin-right: auto;
+        background: #f4c542;
+        color: #17233c;
+    }
+
+    .message small {
+        display: block;
+        margin-top: 5px;
+        font-size: 11px;
+        opacity: 0.7;
+    }
+
+    .message-form {
+        display: flex;
+        gap: 10px;
+        padding: 20px;
+        background: white;
+        border-top: 1px solid #eee;
+    }
+
+    .message-form input {
+        flex: 1;
+        padding: 13px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        outline: none;
+    }
+
+    .message-form button {
+        background: #17233c;
+        color: white;
+        border: none;
+        padding: 13px 25px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .learning-area {
+        display: none;
+        margin-top: 20px;
+        text-align: center;
+        padding: 25px;
+        border-radius: 15px;
+        background: #f8f4df;
+    }
+
+    .learning-area h3 {
+        margin-bottom: 10px;
+    }
+
+    .learning-area p {
+        color: #666;
+        margin-bottom: 18px;
+    }
+
+    .start-learning-btn {
+        background: #17233c;
+        color: white;
+        border: none;
+        padding: 13px 25px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .error {
+        color: red;
+        text-align: center;
+        padding: 30px;
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<header>
+    <div class="logo">SwapSkill</div>
+
+```
+<button class="back-btn" onclick="goBack()">
+    Back
+</button>
+```
+
+</header>
+
+<div class="container">
+
+```
+<div class="conversation-card">
+
+    <div class="conversation-header">
+        <h2 id="conversationTitle">
+            Conversation
+        </h2>
+
+        <p id="mentorText">
+            Loading mentor...
+        </p>
+
+        <p style="margin-top: 10px;">
+            <strong>Skill:</strong>
+            <span id="skillText">Loading...</span>
+        </p>
+    </div>
+
+    <div class="messages" id="messages">
+
+        <div class="empty-message">
+            No messages yet.<br>
+            Start the conversation with your mentor.
+        </div>
+
+    </div>
+
+    <form class="message-form" onsubmit="sendMessage(event)">
+
+        <input
+            type="text"
+            id="messageInput"
+            placeholder="Type your message..."
+            autocomplete="off"
+            required
+        >
+
+        <button type="submit">
+            Send
+        </button>
+
+    </form>
+
+</div>
+
+<div class="learning-area" id="learningArea">
+
+    <h3>🎓 Ready to Start Learning?</h3>
+
+    <p>
+        Your conversation has started.
+        You can now begin learning this skill.
+    </p>
+
+    <button
+        class="start-learning-btn"
+        onclick="startLearning()"
+    >
+        Start Learning
+    </button>
+
+</div>
+```
+
+</div>
+
+<script>
+
+const API_URL = "http://localhost:5000";
+
+
+// ======================================================
+// CURRENT USER
+// ======================================================
+
+const currentUser =
+    JSON.parse(localStorage.getItem("user")) ||
+    JSON.parse(localStorage.getItem("latestUser"));
+
+
+// ======================================================
+// GET REQUEST ID AND SKILL FROM URL
+// ======================================================
+
+const urlParams = new URLSearchParams(window.location.search);
+
+let requestId =
+    urlParams.get("requestId") ||
+    localStorage.getItem("currentLearningRequestId");
+
+let selectedSkill =
+    urlParams.get("skill") ||
+    localStorage.getItem("currentLearningSkill");
+
+
+// ======================================================
+// MENTOR ID
+// ======================================================
+
+let mentorId = null;
+
+let mentorName = "Mentor";
+
+
+// ======================================================
+// LOAD REQUEST
+// ======================================================
+
+async function loadRequest() {
+
+    if (!requestId) {
+
+        document.getElementById("mentorText").innerHTML =
+            "<span class='error'>Request ID missing.</span>";
+
+        return false;
+    }
+
+    try {
+
+        const response = await fetch(
+            `${API_URL}/api/requests/${requestId}`
+        );
+
+        const data = await response.json();
+
+        console.log("REQUEST DATA:", data);
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message || "Unable to load the learning request."
+            );
+
+        }
+
+        // ------------------------------------------------
+        // IMPORTANT:
+        // Database uses receiver_id
+        // ------------------------------------------------
+
+        mentorId = data.receiver_id;
+
+        mentorName =
+            data.receiver_name ||
+            "Mentor";
+
+        selectedSkill =
+            data.skill_name ||
+            selectedSkill ||
+            "Selected Skill";
+
+        // Save values
+        localStorage.setItem(
+            "currentLearningRequestId",
+            requestId
+        );
+
+        localStorage.setItem(
+            "currentLearningSkill",
+            selectedSkill
+        );
+
+        // Display
+        document.getElementById("conversationTitle").innerText =
+            `Conversation - ${selectedSkill}`;
+
+        document.getElementById("mentorText").innerText =
+            `You are connected with ${mentorName} (Mentor #${mentorId}) for this skill.`;
+
+        document.getElementById("skillText").innerText =
+            selectedSkill;
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            "LOAD REQUEST ERROR:",
+            error
+        );
+
+        document.getElementById("mentorText").innerHTML =
+            `<span class="error">${error.message}</span>`;
+
+        return false;
+    }
+}
+
+
+// ======================================================
+// LOAD MESSAGES
+// ======================================================
+
+async function loadMessages() {
+
+    if (!requestId) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `${API_URL}/api/conversations/${requestId}`
+        );
+
+        const data = await response.json();
+
+        console.log("MESSAGES:", data);
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message || "Unable to load messages"
+            );
+
+        }
+
+        const messages =
+            Array.isArray(data)
+                ? data
+                : data.conversations || data.messages || [];
+
+        const messagesContainer =
+            document.getElementById("messages");
+
+        messagesContainer.innerHTML = "";
+
+        // ------------------------------------------------
+        // NO MESSAGES
+        // ------------------------------------------------
+
+        if (messages.length === 0) {
+
+            messagesContainer.innerHTML = `
+                <div class="empty-message">
+                    No messages yet.<br>
+                    Start the conversation with your mentor.
+                </div>
+            `;
+
+            document.getElementById(
+                "learningArea"
+            ).style.display = "none";
+
+            return;
+        }
+
+        // ------------------------------------------------
+        // DISPLAY MESSAGES
+        // ------------------------------------------------
+
+        messages.forEach(message => {
+
+            const messageDiv =
+                document.createElement("div");
+
+            const senderId =
+                Number(
+                    message.sender_id ||
+                    message.senderId
+                );
+
+            const messageText =
+                message.message ||
+                message.content ||
+                "";
+
+            if (
+                currentUser &&
+                senderId === Number(currentUser.id)
+            ) {
+
+                messageDiv.className =
+                    "message my-message";
+
+            } else {
+
+                messageDiv.className =
+                    "message other-message";
+            }
+
+            messageDiv.innerHTML = `
+                ${messageText}
+                <small>
+                    ${message.created_at || ""}
+                </small>
+            `;
+
+            messagesContainer.appendChild(
+                messageDiv
+            );
+
+        });
+
+        messagesContainer.scrollTop =
+            messagesContainer.scrollHeight;
+
+        // ------------------------------------------------
+        // CONVERSATION EXISTS
+        // SHOW START LEARNING
+        // ------------------------------------------------
+
+        document.getElementById(
+            "learningArea"
+        ).style.display = "block";
+
+    } catch (error) {
+
+        console.error(
+            "LOAD MESSAGES ERROR:",
+            error
+        );
+
+        document.getElementById("messages").innerHTML = `
+            <div class="error">
+                Unable to load messages.
+            </div>
+        `;
+    }
+}
+
+
+// ======================================================
+// SEND MESSAGE
+// ======================================================
+
+async function sendMessage(event) {
+
+    event.preventDefault();
+
+    const input =
+        document.getElementById("messageInput");
+
+    const message =
+        input.value.trim();
+
+    if (!message) {
+        return;
+    }
+
+    if (!currentUser) {
+
+        alert("Please login first.");
+
+        return;
+    }
+
+    if (!requestId) {
+
+        alert("Request ID missing.");
+
+        return;
+    }
+
+    if (!mentorId) {
+
+        alert("Mentor information is missing.");
+
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `${API_URL}/api/conversations`,
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    requestId:
+                        Number(requestId),
+
+                    senderId:
+                        Number(currentUser.id),
+
+                    receiverId:
+                        Number(mentorId),
+
+                    message:
+                        message
+                })
+            }
+        );
+
+        const data =
+            await response.json();
+
+        console.log(
+            "SEND MESSAGE RESPONSE:",
+            data
+        );
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Failed to send message"
+            );
+        }
+
+        input.value = "";
+
+        await loadMessages();
+
+    } catch (error) {
+
+        console.error(
+            "SEND MESSAGE ERROR:",
+            error
+        );
+
+        alert(error.message);
+    }
+}
+
+
+// ======================================================
+// START LEARNING
+// ======================================================
+
+function startLearning() {
+
+    if (!requestId) {
+
+        alert("Request ID missing.");
+
+        return;
+    }
+
+    localStorage.setItem(
+        "currentLearningRequestId",
+        requestId
+    );
+
+    localStorage.setItem(
+        "currentLearningSkill",
+        selectedSkill
+    );
+
+    // Java Programming
+    if (
+        selectedSkill.toLowerCase().includes("java")
+    ) {
+
+        window.location.href =
+            "java-learning.html";
+
+        return;
+    }
+
+    // Python Programming
+    if (
+        selectedSkill.toLowerCase().includes("python")
+    ) {
+
+        window.location.href =
+            "python-learning.html";
+
+        return;
+    }
+
+    // Web Development
+    if (
+        selectedSkill.toLowerCase().includes("web")
+    ) {
+
+        window.location.href =
+            "web-learning.html";
+
+        return;
+    }
+
+    // Default
+    window.location.href =
+        "learning.html";
+}
+
+
+// ======================================================
+// BACK
+// ======================================================
+
+function goBack() {
+    window.history.back();
+}
+
+
+// ======================================================
+// INITIALIZE
+// ======================================================
+
+async function initializeConversation() {
+
+    const requestLoaded =
+        await loadRequest();
+
+    if (!requestLoaded) {
+        return;
+    }
+
+    await loadMessages();
+}
+
+initializeConversation();
+
+</script>
+
+</body>
+</html>

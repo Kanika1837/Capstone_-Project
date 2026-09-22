@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explore Skills | Swap Skills</title>
+
+    <title>Explore Skills - SwapSkill</title>
 
     <style>
         * {
@@ -14,127 +16,711 @@
         }
 
         body {
-            background: #fff5f8;
+            background-color: #ffffff;
+            color: #172b4d;
         }
 
-        nav {
-            background: white;
-            padding: 20px 7%;
+        header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+            padding: 20px 7%;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
         }
 
         .logo {
-            font-size: 26px;
-            font-weight: 800;
-            color: #e94b82;
+            font-size: 28px;
+            font-weight: bold;
+            color: #172b4d;
+        }
+
+        .logo span {
+            color: #e5b93f;
         }
 
         nav a {
             text-decoration: none;
-            color: #e94b82;
-            font-weight: 700;
+            color: #172b4d;
+            margin-left: 20px;
+            font-size: 15px;
+            font-weight: 600;
         }
 
-        .heading {
+        nav a:hover {
+            color: #e5b93f;
+        }
+
+        .hero {
+            background-color: #172b4d;
+            color: white;
             text-align: center;
-            padding: 60px 20px 30px;
+            padding: 65px 20px;
         }
 
-        .heading h1 {
-            font-size: 42px;
-            margin-bottom: 12px;
+        .hero h1 {
+            font-size: 40px;
+            margin-bottom: 15px;
         }
 
-        .heading h1 span {
-            color: #e94b82;
+        .hero p {
+            font-size: 18px;
         }
 
-        .heading p {
-            color: #777;
+        .search-container {
+            text-align: center;
+            margin: 35px auto 10px;
         }
 
-        .skills {
-            display: flex;
-            justify-content: center;
+        .search-container input {
+            width: 80%;
+            max-width: 550px;
+            padding: 16px 22px;
+            border: 2px solid #e5b93f;
+            border-radius: 30px;
+            font-size: 16px;
+            outline: none;
+            color: #172b4d;
+        }
+
+        .search-container input:focus {
+            box-shadow: 0 0 8px rgba(229, 185, 63, 0.5);
+        }
+
+        .section {
+            padding: 40px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 30px;
+            color: #172b4d;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 25px;
-            flex-wrap: wrap;
-            padding: 30px 7%;
         }
 
         .skill-card {
-            background: white;
-            width: 260px;
-            padding: 30px;
-            border-radius: 20px;
+            background-color: #ffffff;
+            border: 1px solid #e8e8e8;
+            border-radius: 15px;
+            padding: 25px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
         }
 
-        .skill-card h2 {
-            color: #e94b82;
+        .skill-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .skill-icon {
+            width: 85px;
+            height: 85px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        .skill-card h3 {
+            color: #172b4d;
             margin-bottom: 12px;
+            font-size: 21px;
         }
 
         .skill-card p {
-            color: #666;
+            color: #555555;
+            font-size: 14px;
             line-height: 1.6;
             margin-bottom: 20px;
         }
 
-        .learn-btn {
-            display: inline-block;
+        .skill-card button {
+            background-color: #e5b93f;
+            color: #172b4d;
+            border: none;
             padding: 11px 22px;
-            background: #e94b82;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .skill-card button:hover {
+            background-color: #172b4d;
             color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 700;
+        }
+
+        .no-result {
+            display: none;
+            text-align: center;
+            color: #777777;
+            font-size: 18px;
+            margin-top: 25px;
+        }
+
+        /* Mentor Section */
+
+        .mentor-section {
+            display: none;
+            padding: 40px 7%;
+            background-color: #fafafa;
+        }
+
+        .mentor-section h2 {
+            text-align: center;
+            color: #172b4d;
+            margin-bottom: 25px;
+        }
+
+        .mentor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .mentor-card {
+            background-color: white;
+            border: 1px solid #e8e8e8;
+            border-radius: 15px;
+            padding: 22px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .mentor-card h3 {
+            color: #172b4d;
+            margin-bottom: 12px;
+        }
+
+        .mentor-card p {
+            color: #555555;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .request-btn {
+            margin-top: 15px;
+            background-color: #e5b93f;
+            color: #172b4d;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 22px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .request-btn:hover {
+            background-color: #172b4d;
+            color: white;
+        }
+
+        .mentor-message {
+            text-align: center;
+            color: #777777;
+            font-size: 17px;
+        }
+
+        footer {
+            background-color: #172b4d;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 5px;
+                display: inline-block;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <nav>
-        <div class="logo">Swap Skills</div>
-        <a href="dashboard.html">Dashboard</a>
-    </nav>
+    <header>
+        <div class="logo">
+            Swap<span>Skill</span>
+        </div>
 
-    <section class="heading">
-        <h1>Explore <span>Skills</span></h1>
-        <p>Discover skills and connect with people who can teach you.</p>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="skills.html">Explore Skills</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="login.html">Login</a>
+            <a href="signup.html">Sign Up</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Explore Skills</h1>
+        <p>Learn new skills and share your knowledge with others.</p>
     </section>
 
-    <section class="skills">
+    <div class="search-container">
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search skills..."
+            onkeyup="searchSkills()"
+        >
+    </div>
 
-        <div class="skill-card">
-            <h2>Java</h2>
-            <p>Learn Java programming and object-oriented concepts.</p>
-            <a href="java.html" class="learn-btn">Learn</a>
+    <!-- Technical Skills -->
+
+    <section class="section">
+        <h2 class="section-title">Technical Skills</h2>
+
+        <div class="skills-grid">
+
+            <div class="skill-card">
+                <img
+                    class="skill-icon"
+                    src="https://cdn-icons-png.flaticon.com/512/226/226777.png"
+                    alt="Java"
+                >
+
+                <h3>Java</h3>
+                <p>Learn Java programming from basic to advanced concepts.</p>
+
+                <button onclick="selectSkill('Java')">
+                    Find Mentors
+                </button>
+            </div>
+
+            <div class="skill-card">
+                <img
+                    class="skill-icon"
+                    src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png"
+                    alt="Python"
+                >
+
+                <h3>Python</h3>
+                <p>Learn Python programming and problem-solving techniques.</p>
+
+                <button onclick="selectSkill('Python')">
+                    Find Mentors
+                </button>
+            </div>
+
+            <div class="skill-card">
+                <img
+                    class="skill-icon"
+                    src="https://cdn-icons-png.flaticon.com/512/1055/1055666.png"
+                    alt="Web Development"
+                >
+
+                <h3>Web Development</h3>
+                <p>Learn HTML, CSS and JavaScript to build websites.</p>
+
+                <button onclick="selectSkill('Web Development')">
+                    Find Mentors
+                </button>
+            </div>
+
+            <div class="skill-card">
+                <img
+                    class="skill-icon"
+                    src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png"
+                    alt="Cybersecurity"
+                >
+
+                <h3>Cybersecurity</h3>
+                <p>Understand cybersecurity concepts and online safety.</p>
+
+                <button onclick="selectSkill('Cybersecurity')">
+                    Find Mentors
+                </button>
+            </div>
+
+            <div class="skill-card">
+                <img
+                    class="skill-icon"
+                    src="https://cdn-icons-png.flaticon.com/512/4248/4248443.png"
+                    alt="Database Management"
+                >
+
+                <h3>Database Management</h3>
+                <p>Learn SQL, PostgreSQL and database management concepts.</p>
+
+                <button onclick="selectSkill('Database Management')">
+                    Find Mentors
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Non-Technical Skills -->
+
+    <section class="section">
+        <h2 class="section-title">Non-Technical Skills</h2>
+
+        <div class="skills-grid">
+
+            <div class="skill-card">
+                <img
+                    class="skill-icon"
+                    src="https://cdn-icons-png.flaticon.com/512/3059/3059518.png"
+                    alt="Communication Skills"
+                >
+
+                <h3>Communication Skills</h3>
+                <p>Improve your speaking, listening and communication abilities.</p>
+
+                <button onclick="selectSkill('Communication Skills')">
+                    Find Mentors
+                </button>
+            </div>
+
+            <div class="skill-card">
+                <img
+                    class="skill-icon"
+                    src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png"
+                    alt="Public Speaking"
+                >
+
+                <h3>Public Speaking</h3>
+                <p>Build confidence and learn to speak effectively in public.</p>
+
+                <button onclick="selectSkill('Public Speaking')">
+                    Find Mentors
+                </button>
+            </div>
+
+            <div class="skill-card">
+                <img
+                    class="skill-icon"
+                    src="https://cdn-icons-png.flaticon.com/512/1040/1040242.png"
+                    alt="Photography"
+                >
+
+                <h3>Photography</h3>
+                <p>Learn photography basics, framing and creative techniques.</p>
+
+                <button onclick="selectSkill('Photography')">
+                    Find Mentors
+                </button>
+            </div>
+
+            <div class="skill-card">
+                <img
+                    class="skill-icon"
+                    src="https://cdn-icons-png.flaticon.com/512/2991/2991108.png"
+                    alt="Content Writing"
+                >
+
+                <h3>Content Writing</h3>
+                <p>Learn writing, blogging, editing and creative content skills.</p>
+
+                <button onclick="selectSkill('Content Writing')">
+                    Find Mentors
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Preparation Skills -->
+
+    <section class="section">
+        <h2 class="section-title">Preparation Skills</h2>
+
+        <div class="skills-grid">
+
+            <div class="skill-card">
+                <img
+                    class="skill-icon"
+                    src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png"
+                    alt="Aptitude Preparation"
+                >
+
+                <h3>Aptitude Preparation</h3>
+                <p>Practice quantitative aptitude, reasoning and verbal ability.</p>
+
+                <button onclick="selectSkill('Aptitude Preparation')">
+                    Find Mentors
+                </button>
+            </div>
+
+            <div class="skill-card">
+                <img
+                    class="skill-icon"
+                    src="https://cdn-icons-png.flaticon.com/512/942/942748.png"
+                    alt="Interview Preparation"
+                >
+
+                <h3>Interview Preparation</h3>
+                <p>Prepare for technical and HR interview questions.</p>
+
+                <button onclick="selectSkill('Interview Preparation')">
+                    Find Mentors
+                </button>
+            </div>
+
+            <div class="skill-card">
+                <img
+                    class="skill-icon"
+                    src="https://cdn-icons-png.flaticon.com/512/1256/1256650.png"
+                    alt="Group Discussion"
+                >
+
+                <h3>Group Discussion</h3>
+                <p>Improve your communication and group discussion skills.</p>
+
+                <button onclick="selectSkill('Group Discussion')">
+                    Find Mentors
+                </button>
+            </div>
+
+            <div class="skill-card">
+                <img
+                    class="skill-icon"
+                    src="https://cdn-icons-png.flaticon.com/512/942/942748.png"
+                    alt="Resume Preparation"
+                >
+
+                <h3>Resume Preparation</h3>
+                <p>Learn how to create a professional and effective resume.</p>
+
+                <button onclick="selectSkill('Resume Preparation')">
+                    Find Mentors
+                </button>
+            </div>
+
         </div>
 
-        <div class="skill-card">
-            <h2>Python</h2>
-            <p>Improve your Python programming and problem-solving skills.</p>
-            <a href="python.html" class="learn-btn">Learn</a>
-        </div>
+        <p class="no-result" id="noResult">
+            No skills found. Try another search.
+        </p>
+    </section>
 
-        <div class="skill-card">
-            <h2>Web Development</h2>
-            <p>Learn HTML, CSS and JavaScript to build websites.</p>
-            <a href="web.html" class="learn-btn">Learn</a>
-        </div>
+    <!-- Mentor Results -->
 
-        <div class="skill-card">
-            <h2>UI/UX Design</h2>
-            <p>Learn how to create attractive and user-friendly designs.</p>
-            <a href="uiux.html" class="learn-btn">Learn</a>
-        </div>
+    <section class="mentor-section" id="mentorSection">
+
+        <h2 id="mentorTitle">Available Mentors</h2>
+
+        <div class="mentor-grid" id="mentorGrid"></div>
+
+        <p class="mentor-message" id="mentorMessage"></p>
 
     </section>
+
+    <footer>
+        <p>© 2026 SwapSkill. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+
+        // SEARCH SKILLS
+
+        function searchSkills() {
+
+            const searchValue = document
+                .getElementById("searchInput")
+                .value
+                .toLowerCase()
+                .trim();
+
+            const skillCards = document.querySelectorAll(".skill-card");
+            const noResult = document.getElementById("noResult");
+
+            let found = false;
+
+            skillCards.forEach(function(card) {
+
+                const skillName = card.innerText.toLowerCase();
+
+                if (skillName.includes(searchValue)) {
+                    card.style.display = "block";
+                    found = true;
+                } else {
+                    card.style.display = "none";
+                }
+
+            });
+
+            noResult.style.display = found ? "none" : "block";
+        }
+
+
+        // FIND MENTORS
+
+        async function selectSkill(skillName) {
+
+            localStorage.setItem("selectedSkill", skillName);
+
+            const mentorSection = document.getElementById("mentorSection");
+            const mentorGrid = document.getElementById("mentorGrid");
+            const mentorMessage = document.getElementById("mentorMessage");
+            const mentorTitle = document.getElementById("mentorTitle");
+
+            mentorSection.style.display = "block";
+            mentorGrid.innerHTML = "";
+            mentorMessage.textContent = "Searching for mentors...";
+
+            mentorTitle.textContent = skillName + " Mentors";
+
+            mentorSection.scrollIntoView({
+                behavior: "smooth"
+            });
+
+            try {
+
+                const response = await fetch(
+                    "http://localhost:5000/api/users/mentors/" +
+                    encodeURIComponent(skillName)
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(
+                        data.message || "Failed to load mentors"
+                    );
+                }
+
+                if (!Array.isArray(data) || data.length === 0) {
+
+                    mentorMessage.textContent =
+                        "No mentors found for " + skillName + " yet.";
+
+                    return;
+                }
+
+                mentorMessage.textContent = "";
+
+                data.forEach(function(mentor) {
+
+                    const card = document.createElement("div");
+
+                    card.className = "mentor-card";
+
+                    card.innerHTML = `
+                        <h3>${mentor.name}</h3>
+
+                        <p>
+                            <strong>Email:</strong>
+                            ${mentor.email}
+                        </p>
+
+                        <p>
+                            <strong>Skills:</strong>
+                            ${mentor.teaching_skills || skillName}
+                        </p>
+
+                        <p>
+                            <strong>Status:</strong>
+                            ${mentor.status || "Available"}
+                        </p>
+
+                        <button
+                            class="request-btn"
+                            onclick="sendRequest(${mentor.id}, '${skillName}')"
+                        >
+                            Request Skill Swap
+                        </button>
+                    `;
+
+                    mentorGrid.appendChild(card);
+
+                });
+
+            } catch (error) {
+
+                console.error("Mentor search error:", error);
+
+                mentorMessage.textContent =
+                    "Backend connection failed. Please start the backend.";
+
+            }
+        }
+
+
+        // SEND SKILL SWAP REQUEST
+
+        async function sendRequest(mentorId, skillName) {
+
+            const currentUser = JSON.parse(
+                localStorage.getItem("latestUser")
+            );
+
+            if (!currentUser || !currentUser.id) {
+
+                alert("Please login first.");
+
+                window.location.href = "login.html";
+
+                return;
+            }
+
+            if (Number(currentUser.id) === Number(mentorId)) {
+
+                alert("You cannot send a request to yourself.");
+
+                return;
+            }
+
+            try {
+
+                const response = await fetch(
+                    "http://localhost:5000/api/requests",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            requesterId: currentUser.id,
+                            mentorId: mentorId,
+                            skillName: skillName
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+
+                    alert(
+                        data.message || "Failed to send request."
+                    );
+
+                    return;
+                }
+
+                alert(
+                    "Skill swap request sent successfully! ✅"
+                );
+
+            } catch (error) {
+
+                console.error("Request error:", error);
+
+                alert(
+                    "Backend connection failed. Please start the backend."
+                );
+
+            }
+        }
+
+    </script>
 
 </body>
+
 </html>

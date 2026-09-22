@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Certificate - SwapSkill</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8f8f8;
+            color: #172b4d;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .certificate {
+            background-color: white;
+            width: 100%;
+            max-width: 850px;
+            padding: 60px;
+            text-align: center;
+            border: 12px solid #172b4d;
+            outline: 5px solid #e5b93f;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo {
+            font-size: 35px;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .logo span {
+            color: #e5b93f;
+        }
+
+        h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .name {
+            font-size: 34px;
+            font-weight: bold;
+            color: #172b4d;
+            border-bottom: 2px solid #e5b93f;
+            display: inline-block;
+            padding: 10px 30px;
+            margin-bottom: 30px;
+        }
+
+        .course-text {
+            font-size: 20px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .date {
+            font-size: 16px;
+            margin-top: 25px;
+        }
+
+        .buttons {
+            margin-top: 35px;
+        }
+
+        button {
+            background-color: #e5b93f;
+            color: #172b4d;
+            border: none;
+            padding: 13px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #172b4d;
+            color: white;
+        }
+
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+            }
+
+            .certificate {
+                box-shadow: none;
+            }
+
+            .buttons {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .certificate {
+                padding: 30px 15px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            .name {
+                font-size: 25px;
+            }
+
+            .course-text {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="certificate">
+
+        <div class="logo">
+            Swap<span>Skill</span>
+        </div>
+
+        <h1>Certificate of Completion</h1>
+
+        <p class="subtitle">
+            This certificate is proudly presented to
+        </p>
+
+        <div class="name" id="studentName">
+            SwapSkill Learner
+        </div>
+
+        <p class="course-text">
+            For successfully completing the
+            <strong id="courseName">Python</strong>
+            Learning Course
+            <br>
+            through the SwapSkill Learning Platform.
+        </p>
+
+        <p class="date">
+            Date of Completion:
+            <strong id="completionDate"></strong>
+        </p>
+
+        <div class="buttons">
+            <button onclick="window.print()">
+                Print Certificate
+            </button>
+
+            <button onclick="goToDashboard()">
+                Back to Dashboard
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+
+        const studentName =
+            localStorage.getItem("userName") || "SwapSkill Learner";
+
+        const courseName =
+            localStorage.getItem("certificateCourse") || "Python";
+
+        const today = new Date();
+
+        const formattedDate = today.toLocaleDateString("en-IN");
+
+        document.getElementById("studentName").textContent =
+            studentName;
+
+        document.getElementById("courseName").textContent =
+            courseName;
+
+        document.getElementById("completionDate").textContent =
+            formattedDate;
+
+        function goToDashboard() {
+            window.location.href = "dashboard.html";
+        }
+
+    </script>
+
+</body>
+
+</html>

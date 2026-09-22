@@ -1,183 +1,1677 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Swap Skills</title>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+```
+<title>Dashboard - SwapSkill</title>
 
-        body {
-            background: #fff5f8;
-            min-height: 100vh;
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background: #ffffff;
+        color: #172b4d;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 7%;
+        background: #ffffff;
+        border-bottom: 1px solid #eeeeee;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .logo {
+        font-size: 28px;
+        font-weight: bold;
+        color: #172b4d;
+    }
+
+    .logo span {
+        color: #e5b93f;
+    }
+
+    nav {
+        display: flex;
+        gap: 22px;
+        align-items: center;
+    }
+
+    nav a {
+        text-decoration: none;
+        color: #172b4d;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    nav a:hover {
+        color: #e5b93f;
+    }
+
+    .logout {
+        color: #d9534f;
+    }
+
+    .welcome {
+        padding: 50px 7% 25px;
+    }
+
+    .welcome h1 {
+        font-size: 32px;
+        margin-bottom: 10px;
+    }
+
+    .welcome p {
+        color: #666666;
+        font-size: 16px;
+    }
+
+    .dashboard-container {
+        padding: 20px 7% 60px;
+    }
+
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 22px;
+    }
+
+    .dashboard-card {
+        padding: 28px 22px;
+        border: 1px solid #eeeeee;
+        border-radius: 15px;
+        background: #ffffff;
+        box-shadow: 0 5px 18px rgba(23, 43, 77, 0.08);
+        transition: 0.3s;
+    }
+
+    .dashboard-card:hover {
+        transform: translateY(-5px);
+        border-color: #e5b93f;
+    }
+
+    .dashboard-card h3 {
+        margin-bottom: 12px;
+        font-size: 19px;
+    }
+
+    .dashboard-card p {
+        color: #666666;
+        line-height: 1.6;
+        font-size: 14px;
+    }
+
+    .card-button {
+        display: inline-block;
+        margin-top: 18px;
+        padding: 10px 16px;
+        background: #e5b93f;
+        color: #172b4d;
+        text-decoration: none;
+        border-radius: 7px;
+        font-weight: bold;
+        font-size: 13px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .card-button:hover {
+        background: #172b4d;
+        color: #ffffff;
+    }
+
+    .selected-skill {
+        margin-top: 30px;
+        padding: 25px;
+        background: #fff9df;
+        border-left: 5px solid #e5b93f;
+        border-radius: 10px;
+    }
+
+    .selected-skill h2 {
+        margin-bottom: 10px;
+    }
+
+    #selectedSkillText {
+        font-weight: bold;
+        color: #172b4d;
+    }
+
+    /* MY LEARNING */
+
+    .learning-section {
+        display: none;
+        margin-top: 35px;
+        padding: 30px;
+        background: #ffffff;
+        border: 1px solid #eeeeee;
+        border-radius: 15px;
+        box-shadow: 0 5px 18px rgba(23, 43, 77, 0.08);
+    }
+
+    .learning-section h2 {
+        margin-bottom: 20px;
+    }
+
+    .learning-card {
+        background: #fff9df;
+        border-left: 5px solid #e5b93f;
+        padding: 20px;
+        margin-bottom: 15px;
+        border-radius: 10px;
+    }
+
+    .learning-card h3 {
+        margin-bottom: 10px;
+    }
+
+    .learning-card p {
+        color: #666666;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .learning-button {
+        display: inline-block;
+        padding: 9px 15px;
+        background: #e5b93f;
+        color: #172b4d;
+        border: none;
+        border-radius: 7px;
+        font-weight: bold;
+        cursor: pointer;
+        margin: 5px 5px 0 0;
+    }
+
+    .learning-button:hover {
+        background: #172b4d;
+        color: #ffffff;
+    }
+
+    .empty-message {
+        color: #777777;
+        font-size: 15px;
+    }
+
+    /* SHARE */
+
+    .share-section {
+        display: none;
+        margin-top: 35px;
+        padding: 30px;
+        background: #ffffff;
+        border: 1px solid #eeeeee;
+        border-radius: 15px;
+        box-shadow: 0 5px 18px rgba(23, 43, 77, 0.08);
+    }
+
+    .share-section h2 {
+        margin-bottom: 20px;
+    }
+
+    .share-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .share-form select {
+        padding: 12px;
+        border: 1px solid #dddddd;
+        border-radius: 7px;
+        min-width: 230px;
+        color: #172b4d;
+    }
+
+    .shared-skill-card {
+        background: #fff9df;
+        border-left: 5px solid #e5b93f;
+        padding: 18px;
+        margin-bottom: 12px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .shared-skill-card h3 {
+        color: #172b4d;
+    }
+
+    .remove-button {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 7px;
+        background: #d9534f;
+        color: #ffffff;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .remove-button:hover {
+        background: #a94442;
+    }
+
+    /* PROGRESS */
+
+    .progress-section {
+        display: none;
+        margin-top: 35px;
+        padding: 30px;
+        background: #ffffff;
+        border: 1px solid #eeeeee;
+        border-radius: 15px;
+        box-shadow: 0 5px 18px rgba(23, 43, 77, 0.08);
+    }
+
+    .progress-card {
+        background: #fff9df;
+        border-left: 5px solid #e5b93f;
+        padding: 18px;
+        margin-bottom: 12px;
+        border-radius: 10px;
+    }
+
+    .progress-card h3 {
+        margin-bottom: 10px;
+    }
+
+    /* REQUESTS */
+
+    .requests-section {
+        margin-top: 35px;
+        padding: 30px;
+        background: #ffffff;
+        border: 1px solid #eeeeee;
+        border-radius: 15px;
+        box-shadow: 0 5px 18px rgba(23, 43, 77, 0.08);
+    }
+
+    .requests-section h2 {
+        margin-bottom: 25px;
+    }
+
+    .request-card {
+        background: #fff9df;
+        border-left: 5px solid #e5b93f;
+        padding: 22px;
+        margin-bottom: 18px;
+        border-radius: 10px;
+    }
+
+    .request-card h3 {
+        margin-bottom: 15px;
+    }
+
+    .request-card p {
+        margin-bottom: 9px;
+        color: #555555;
+        font-size: 14px;
+    }
+
+    .status {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 9px 18px;
+        background: #e5b93f;
+        color: #172b4d;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 13px;
+    }
+
+    .request-message {
+        color: #777777;
+        font-size: 15px;
+    }
+
+    .conversation-button {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 10px 17px;
+        background: #172b4d;
+        color: #ffffff;
+        border: none;
+        border-radius: 7px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .conversation-button:hover {
+        background: #e5b93f;
+        color: #172b4d;
+    }
+
+    .waiting-message {
+        margin-top: 12px;
+        color: #777777;
+        font-size: 14px;
+    }
+
+    .accepted-message {
+        margin-top: 12px;
+        color: #2e7d32;
+        font-weight: bold;
+    }
+
+    .rejected-message {
+        margin-top: 12px;
+        color: #d9534f;
+        font-weight: bold;
+    }
+
+    @media (max-width: 1000px) {
+        .dashboard-grid {
+            grid-template-columns: repeat(2, 1fr);
         }
 
         nav {
-            background: white;
-            padding: 20px 7%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.06);
-        }
-
-        .logo {
-            font-size: 26px;
-            font-weight: 800;
-            color: #e94b82;
-        }
-
-        .logout {
-            text-decoration: none;
-            color: #e94b82;
-            font-weight: 700;
-        }
-
-        .hero {
-            text-align: center;
-            padding: 80px 20px 40px;
-        }
-
-        .hero h1 {
-            font-size: 48px;
-            color: #222;
-            margin-bottom: 15px;
-        }
-
-        .hero h1 span {
-            color: #e94b82;
-        }
-
-        .hero p {
-            color: #777;
-            font-size: 18px;
-        }
-
-        .cards {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            padding: 40px 7%;
+            gap: 12px;
             flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+    }
+
+    @media (max-width: 600px) {
+        header {
+            flex-direction: column;
+            gap: 15px;
         }
 
-        .card {
-            background: white;
-            width: 280px;
-            padding: 35px 25px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+        nav {
+            justify-content: center;
         }
 
-        .card h2 {
-            color: #e94b82;
-            margin-bottom: 12px;
+        .dashboard-grid {
+            grid-template-columns: 1fr;
         }
 
-        .card p {
-            color: #666;
-            line-height: 1.6;
+        .welcome h1 {
+            font-size: 26px;
         }
-    </style>
+
+        .requests-section,
+        .learning-section,
+        .share-section,
+        .progress-section {
+            padding: 20px;
+        }
+
+        .shared-skill-card {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+</style>
+```
+
 </head>
 
 <body>
 
-    <nav>
-        <div class="logo">Swap Skills</div>
-        <a href="index.html" class="logout">Logout</a>
-    </nav>
+<header>
 
-    <section class="hero">
-        <h1>Welcome to <span>Swap Skills</span>!</h1>
-        <p>Learn skills. Share skills. Grow together.</p>
-    </section>
-    <div class="cards">
+```
+<div class="logo">
+    Swap<span>Skill</span>
+</div>
 
-    <div class="card">
-        <h2>💻 Java</h2>
-        <p>Learn Java programming from skilled members.</p>
+<nav>
+    <a href="index.html">Home</a>
+    <a href="skills.html">Explore Skills</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="profile.html">👤 My Profile</a>
+    <a href="premium.html">Premium</a>
+    <a href="#" class="logout" onclick="logoutUser()">Logout</a>
+</nav>
+```
+
+</header>
+
+<section class="welcome">
+
+```
+<h1 id="welcomeMessage">
+    Welcome to your Dashboard!
+</h1>
+
+<p>
+    Track your learning journey and improve your skills with SwapSkill.
+</p>
+```
+
+</section>
+
+<section class="dashboard-container">
+
+```
+<div class="dashboard-grid">
+
+    <div class="dashboard-card">
+
+        <h3>📚 My Learning</h3>
+
+        <p>
+            View and continue learning the skills you have selected.
+        </p>
+
+        <button class="card-button" onclick="showMyLearning()">
+            View My Learning
+        </button>
+
     </div>
 
-    <div class="card">
-        <h2>🐍 Python</h2>
-        <p>Improve your Python programming skills.</p>
+
+    <div class="dashboard-card">
+
+        <h3>🎯 Skills I Want to Learn</h3>
+
+        <p>
+            Explore and select new skills from our learning platform.
+        </p>
+
+        <a href="skills.html" class="card-button">
+            Explore Skills
+        </a>
+
     </div>
 
-    <div class="card">
-        <h2>🌐 Web Development</h2>
-        <p>Learn HTML, CSS and JavaScript.</p>
+
+    <div class="dashboard-card">
+
+        <h3>💡 Skills I Can Share</h3>
+
+        <p>
+            Share your knowledge and help other users learn.
+        </p>
+
+        <button class="card-button" onclick="showShareSkills()">
+            Share Skills
+        </button>
+
     </div>
 
-    <div class="card">
-        <h2>🎨 UI/UX Design</h2>
-        <p>Learn creative and user-friendly design.</p>
+
+    <div class="dashboard-card">
+
+        <h3>📈 My Progress</h3>
+
+        <p>
+            Check your course progress and completed learning modules.
+        </p>
+
+        <button class="card-button" onclick="viewProgress()">
+            View Progress
+        </button>
+
     </div>
 
 </div>
-    <div style="text-align:center; margin:40px 20px;">
-    <h2>Find a Skill</h2>
 
-    <input
-        type="text"
-        placeholder="Search for a skill..."
-        style="padding:15px; width:300px; border-radius:10px; border:1px solid #ddd;"
-    >
 
-    <button
-        style="padding:15px 25px; margin-left:10px; border:none; border-radius:10px; background:#e94b82; color:white; cursor:pointer;"
-    >
-        Search
-    </button>
-    <br><br>
+<!-- MY LEARNING -->
 
-<a href="skills.html" style="
-    display:inline-block;
-    padding:12px 25px;
-    background:#e94b82;
-    color:white;
-    text-decoration:none;
-    border-radius:10px;
-    font-weight:bold;
-">
-    Explore All Skills →
-</a>
+<div class="learning-section" id="myLearningSection">
+
+    <h2>📚 My Learning</h2>
+
+    <div id="learningContainer">
+
+        <p class="empty-message">
+            Your learning requests will appear here.
+        </p>
+
+    </div>
+
 </div>
 
-    <section class="cards">
 
-        <div class="card">
-            <h2>Learn Skills</h2>
-            <p>
-                Discover new skills and learn from people
-                in our community.
+<!-- SHARE SKILLS -->
+
+<div class="share-section" id="shareSkillsSection">
+
+    <h2>💡 Skills I Can Share</h2>
+
+    <div class="share-form">
+
+        <select id="shareSkillSelect">
+
+            <option value="">
+                Select a skill you can share
+            </option>
+
+            <option value="Java">Java</option>
+            <option value="Python">Python</option>
+            <option value="Web Development">Web Development</option>
+            <option value="Cybersecurity">Cybersecurity</option>
+            <option value="Database Management">Database Management</option>
+            <option value="Communication Skills">Communication Skills</option>
+            <option value="Public Speaking">Public Speaking</option>
+            <option value="Photography">Photography</option>
+            <option value="Content Writing">Content Writing</option>
+            <option value="Aptitude Preparation">Aptitude Preparation</option>
+            <option value="Interview Preparation">Interview Preparation</option>
+            <option value="Group Discussion">Group Discussion</option>
+            <option value="Resume Preparation">Resume Preparation</option>
+
+        </select>
+
+        <button class="card-button" onclick="addSharedSkill()">
+            Add Skill
+        </button>
+
+    </div>
+
+    <div id="sharedSkillsContainer">
+
+        <p class="empty-message">
+            You have not added any skills to share yet.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- PROGRESS -->
+
+<div class="progress-section" id="progressSection">
+
+    <h2>📈 My Progress</h2>
+
+    <div id="progressContainer">
+
+        <p class="empty-message">
+            Your learning progress will appear here.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- SELECTED SKILL -->
+
+<div class="selected-skill">
+
+    <h2>Selected Skill</h2>
+
+    <p>
+        Your selected skill:
+        <span id="selectedSkillText">
+            No skill selected yet
+        </span>
+    </p>
+
+</div>
+
+
+<!-- REQUESTS -->
+
+<div class="requests-section">
+
+    <h2>📨 My Skill Swap Requests</h2>
+
+    <div id="requestsContainer">
+
+        <p class="request-message">
+            Loading your requests...
+        </p>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<script src="js/activity.js"></script>
+
+<script>
+
+let currentUser = null;
+
+const storedUser =
+    localStorage.getItem("user") ||
+    localStorage.getItem("latestUser");
+
+if (storedUser) {
+
+    try {
+
+        currentUser = JSON.parse(storedUser);
+
+        document.getElementById("welcomeMessage").innerText =
+            "Welcome, " + (currentUser.name || "User") + "!";
+
+    } catch (error) {
+
+        console.log("User data error");
+
+    }
+
+}
+
+
+/* GET SELECTED SKILLS */
+
+function getSelectedSkills() {
+
+    let skills = [];
+
+    const multipleSkills =
+        localStorage.getItem("selectedSkills");
+
+    const singleSkill =
+        localStorage.getItem("selectedSkill");
+
+    if (multipleSkills) {
+
+        try {
+
+            const parsedSkills = JSON.parse(multipleSkills);
+
+            if (Array.isArray(parsedSkills)) {
+                skills = parsedSkills;
+            }
+
+        } catch (error) {
+
+            console.log("Selected skills data error");
+
+        }
+
+    }
+
+    if (singleSkill && !skills.includes(singleSkill)) {
+        skills.push(singleSkill);
+    }
+
+    return [...new Set(skills)];
+
+}
+
+
+/* DISPLAY SELECTED SKILL */
+
+function updateSelectedSkillText() {
+
+    const selectedSkills = getSelectedSkills();
+
+    if (selectedSkills.length > 0) {
+
+        document.getElementById("selectedSkillText").innerText =
+            selectedSkills.join(", ");
+
+    } else {
+
+        document.getElementById("selectedSkillText").innerText =
+            "No skill selected yet";
+
+    }
+
+}
+
+updateSelectedSkillText();
+
+
+/* SHOW MY LEARNING */
+
+async function showMyLearning() {
+
+    hideAllSections();
+
+    const learningSection =
+        document.getElementById("myLearningSection");
+
+    const learningContainer =
+        document.getElementById("learningContainer");
+
+    learningContainer.innerHTML =
+        "<p class='empty-message'>Loading your learning requests...</p>";
+
+    learningSection.style.display = "block";
+
+    learningSection.scrollIntoView({
+        behavior: "smooth"
+    });
+
+    if (!currentUser || !currentUser.id) {
+
+        learningContainer.innerHTML = `
+            <p class="empty-message">
+                Please login to view your learning requests.
             </p>
-        </div>
+        `;
 
-        <div class="card">
-            <h2>Share Skills</h2>
-            <p>
-                Share what you know and help others
-                improve their skills.
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            "http://localhost:5000/api/requests/user/" +
+            currentUser.id
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message || "Failed to load requests"
+            );
+
+        }
+
+        if (!Array.isArray(data) || data.length === 0) {
+
+            learningContainer.innerHTML = `
+                <p class="empty-message">
+                    You have not sent any skill swap requests yet.
+                </p>
+
+                <a href="skills.html" class="card-button">
+                    Explore Skills
+                </a>
+            `;
+
+            return;
+        }
+
+        learningContainer.innerHTML = "";
+
+        data.forEach(function(request) {
+
+            const requestId =
+                request.id ||
+                request.request_id ||
+                request.requestId;
+
+            const skillName =
+                request.skill_name ||
+                request.skillName ||
+                "Skill";
+
+            const status =
+                String(request.status || "Pending").toLowerCase();
+
+            const mentorName =
+                request.receiver_name ||
+                request.mentor_name ||
+                "Mentor";
+
+            const card =
+                document.createElement("div");
+
+            card.className = "learning-card";
+
+            const title =
+                document.createElement("h3");
+
+            title.textContent =
+                "🎯 " + skillName;
+
+            const description =
+                document.createElement("p");
+
+            description.textContent =
+                "Mentor: " + mentorName;
+
+            card.appendChild(title);
+            card.appendChild(description);
+
+
+            /* PENDING */
+
+            if (
+                status === "pending" ||
+                status === "requested"
+            ) {
+
+                const message =
+                    document.createElement("p");
+
+                message.className = "waiting-message";
+
+                message.textContent =
+                    "⏳ Waiting for the mentor to accept your request.";
+
+                card.appendChild(message);
+
+            }
+
+
+            /* ACCEPTED */
+
+            else if (
+                status === "accepted" ||
+                status === "approved"
+            ) {
+
+                const message =
+                    document.createElement("p");
+
+                message.className = "accepted-message";
+
+                message.textContent =
+                    "✓ Mentor accepted your request.";
+
+                card.appendChild(message);
+
+
+                if (requestId) {
+
+                    const conversationButton =
+                        document.createElement("button");
+
+                    conversationButton.className =
+                        "conversation-button";
+
+                    conversationButton.textContent =
+                        "💬 Open Conversation";
+
+                    conversationButton.onclick =
+                        function() {
+
+                            openConversation(
+                                requestId,
+                                skillName
+                            );
+
+                        };
+
+                    card.appendChild(conversationButton);
+
+                } else {
+
+                    const errorMessage =
+                        document.createElement("p");
+
+                    errorMessage.className =
+                        "rejected-message";
+
+                    errorMessage.textContent =
+                        "Request ID is missing.";
+
+                    card.appendChild(errorMessage);
+
+                }
+
+            }
+
+
+            /* REJECTED */
+
+            else if (
+                status === "rejected" ||
+                status === "declined"
+            ) {
+
+                const message =
+                    document.createElement("p");
+
+                message.className =
+                    "rejected-message";
+
+                message.textContent =
+                    "✕ Mentor rejected this request.";
+
+                card.appendChild(message);
+
+            }
+
+
+            /* OTHER STATUS */
+
+            else {
+
+                const message =
+                    document.createElement("p");
+
+                message.className =
+                    "waiting-message";
+
+                message.textContent =
+                    "Request status: " + request.status;
+
+                card.appendChild(message);
+
+            }
+
+            learningContainer.appendChild(card);
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "My learning error:",
+            error
+        );
+
+        learningContainer.innerHTML = `
+            <p class="empty-message">
+                Failed to load your learning requests.
+                Please check the backend.
             </p>
-        </div>
+        `;
 
-        <div class="card">
-            <h2>Grow Together</h2>
-            <p>
-                Connect with learners, exchange knowledge
-                and grow together.
+    }
+
+}
+
+
+/* OPEN CONVERSATION */
+
+function openConversation(requestId, skillName) {
+
+    if (!requestId) {
+
+        alert("Request ID not found.");
+
+        return;
+
+    }
+
+    console.log(
+        "Opening conversation with request ID:",
+        requestId
+    );
+
+    localStorage.setItem(
+        "currentLearningRequestId",
+        requestId
+    );
+
+    localStorage.setItem(
+        "currentLearningSkill",
+        skillName
+    );
+
+    const conversationURL =
+        "conversation.html?requestId=" +
+        encodeURIComponent(requestId) +
+        "&skill=" +
+        encodeURIComponent(skillName);
+
+    window.location.href = conversationURL;
+
+}
+
+
+/* START LEARNING */
+
+function startLearning(skillName, requestId) {
+
+    if (requestId) {
+
+        localStorage.setItem(
+            "currentLearningRequestId",
+            requestId
+        );
+
+    }
+
+    localStorage.setItem(
+        "currentLearningSkill",
+        skillName
+    );
+
+    const learningPages = {
+
+        "Java": "java-learning.html",
+        "Python": "python-learning.html",
+        "Web Development": "web-development-learning.html",
+        "Cybersecurity": "cybersecurity-learning.html",
+        "Database Management": "database-learning.html",
+        "Communication Skills": "communication-learning.html",
+        "Public Speaking": "public-speaking-learning.html",
+        "Photography": "photography-learning.html",
+        "Content Writing": "content-writing-learning.html",
+        "Aptitude Preparation": "aptitude-learning.html",
+        "Interview Preparation": "interview-learning.html",
+        "Group Discussion": "group-discussion-learning.html",
+        "Resume Preparation": "resume-learning.html"
+
+    };
+
+    const pageName =
+        learningPages[skillName];
+
+    if (pageName) {
+
+        window.location.href = pageName;
+
+    } else {
+
+        alert(
+            "Learning page for " +
+            skillName +
+            " is not available yet."
+        );
+
+    }
+
+}
+
+
+/* SHARE SKILLS */
+
+function showShareSkills() {
+
+    hideAllSections();
+
+    const shareSection =
+        document.getElementById("shareSkillsSection");
+
+    shareSection.style.display = "block";
+
+    displaySharedSkills();
+
+    shareSection.scrollIntoView({
+        behavior: "smooth"
+    });
+
+}
+
+
+function getSharedSkills() {
+
+    let skills = [];
+
+    const storedSkills =
+        localStorage.getItem("sharedSkills");
+
+    if (storedSkills) {
+
+        try {
+
+            const parsedSkills =
+                JSON.parse(storedSkills);
+
+            if (Array.isArray(parsedSkills)) {
+                skills = parsedSkills;
+            }
+
+        } catch (error) {
+
+            console.log("Shared skills data error");
+
+        }
+
+    }
+
+    return [...new Set(skills)];
+
+}
+
+
+function addSharedSkill() {
+
+    const selectedSkill =
+        document.getElementById("shareSkillSelect").value;
+
+    if (!selectedSkill) {
+
+        alert("Please select a skill first.");
+        return;
+
+    }
+
+    let sharedSkills =
+        getSharedSkills();
+
+    if (sharedSkills.includes(selectedSkill)) {
+
+        alert("You have already added this skill.");
+        return;
+
+    }
+
+    sharedSkills.push(selectedSkill);
+
+    localStorage.setItem(
+        "sharedSkills",
+        JSON.stringify(sharedSkills)
+    );
+
+    document.getElementById(
+        "shareSkillSelect"
+    ).value = "";
+
+    displaySharedSkills();
+
+    alert(
+        selectedSkill +
+        " added to your shared skills."
+    );
+
+}
+
+
+function displaySharedSkills() {
+
+    const container =
+        document.getElementById(
+            "sharedSkillsContainer"
+        );
+
+    const sharedSkills =
+        getSharedSkills();
+
+    container.innerHTML = "";
+
+    if (sharedSkills.length === 0) {
+
+        container.innerHTML = `
+            <p class="empty-message">
+                You have not added any skills to share yet.
             </p>
-        </div>
+        `;
 
-    </section>
-<script src="./js/dashboard.js"></script>
+        return;
+
+    }
+
+    sharedSkills.forEach(function(skill) {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "shared-skill-card";
+
+        const title =
+            document.createElement("h3");
+
+        title.textContent =
+            "💡 " + skill;
+
+        const removeButton =
+            document.createElement("button");
+
+        removeButton.className =
+            "remove-button";
+
+        removeButton.textContent =
+            "Remove";
+
+        removeButton.onclick =
+            function() {
+
+                removeSharedSkill(skill);
+
+            };
+
+        card.appendChild(title);
+
+        card.appendChild(removeButton);
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+function removeSharedSkill(skillName) {
+
+    let sharedSkills =
+        getSharedSkills();
+
+    sharedSkills =
+        sharedSkills.filter(
+            function(skill) {
+                return skill !== skillName;
+            }
+        );
+
+    localStorage.setItem(
+        "sharedSkills",
+        JSON.stringify(sharedSkills)
+    );
+
+    displaySharedSkills();
+
+}
+
+
+/* PROGRESS */
+
+function viewProgress() {
+
+    hideAllSections();
+
+    const progressSection =
+        document.getElementById(
+            "progressSection"
+        );
+
+    const progressContainer =
+        document.getElementById(
+            "progressContainer"
+        );
+
+    const skills =
+        getSelectedSkills();
+
+    progressContainer.innerHTML = "";
+
+    if (skills.length === 0) {
+
+        progressContainer.innerHTML = `
+            <p class="empty-message">
+                You have not selected any skills yet.
+            </p>
+        `;
+
+    } else {
+
+        skills.forEach(function(skill) {
+
+            const progressCard =
+                document.createElement("div");
+
+            progressCard.className =
+                "progress-card";
+
+            progressCard.innerHTML = `
+                <h3>📘 ${skill}</h3>
+                <p>Progress: Not started yet</p>
+            `;
+
+            progressContainer.appendChild(
+                progressCard
+            );
+
+        });
+
+    }
+
+    progressSection.style.display =
+        "block";
+
+    progressSection.scrollIntoView({
+        behavior: "smooth"
+    });
+
+}
+
+
+/* HIDE SECTIONS */
+
+function hideAllSections() {
+
+    document.getElementById(
+        "myLearningSection"
+    ).style.display = "none";
+
+    document.getElementById(
+        "shareSkillsSection"
+    ).style.display = "none";
+
+    document.getElementById(
+        "progressSection"
+    ).style.display = "none";
+
+}
+
+
+/* LOAD REQUESTS */
+
+async function loadMyRequests() {
+
+    const requestsContainer =
+        document.getElementById(
+            "requestsContainer"
+        );
+
+    if (!currentUser || !currentUser.id) {
+
+        requestsContainer.innerHTML = `
+            <p class="request-message">
+                Please login to view your requests.
+            </p>
+        `;
+
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                "http://localhost:5000/api/requests/user/" +
+                currentUser.id
+            );
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Failed to fetch requests"
+            );
+
+        }
+
+        requestsContainer.innerHTML = "";
+
+        if (
+            !Array.isArray(data) ||
+            data.length === 0
+        ) {
+
+            requestsContainer.innerHTML = `
+                <p class="request-message">
+                    You have not sent any skill swap requests yet.
+                </p>
+            `;
+
+            return;
+
+        }
+
+
+        data.forEach(function(request) {
+
+            const requestCard =
+                document.createElement("div");
+
+            requestCard.className =
+                "request-card";
+
+
+            /*
+             * IMPORTANT:
+             * Get the real request ID
+             */
+
+            const requestId =
+                request.id ||
+                request.request_id ||
+                request.requestId;
+
+
+            const mentorName =
+                request.receiver_name ||
+                request.mentor_name ||
+                "Not available";
+
+
+            const mentorEmail =
+                request.receiver_email ||
+                request.mentor_email ||
+                "Not available";
+
+
+            const skillName =
+                request.skill_name ||
+                request.skillName ||
+                "Not available";
+
+
+            const requestStatus =
+                request.status ||
+                "Pending";
+
+
+            const requestDate =
+                request.created_at ||
+                request.request_date ||
+                request.createdAt ||
+                null;
+
+
+            let formattedDate =
+                "Not available";
+
+            if (requestDate) {
+
+                formattedDate =
+                    new Date(
+                        requestDate
+                    ).toLocaleDateString();
+
+            }
+
+
+            requestCard.innerHTML = `
+
+                <h3>🎯 ${skillName}</h3>
+
+                <p>
+                    <strong>Mentor Name:</strong>
+                    ${mentorName}
+                </p>
+
+                <p>
+                    <strong>Mentor Email:</strong>
+                    ${mentorEmail}
+                </p>
+
+                <p>
+                    <strong>Request Date:</strong>
+                    ${formattedDate}
+                </p>
+
+                <span class="status">
+                    Status: ${requestStatus}
+                </span>
+
+            `;
+
+
+            /*
+             * ACCEPTED REQUEST
+             */
+
+            const statusLower =
+                String(
+                    requestStatus
+                ).toLowerCase();
+
+
+            if (
+                (
+                    statusLower === "accepted" ||
+                    statusLower === "approved"
+                ) &&
+                requestId
+            ) {
+
+                const conversationButton =
+                    document.createElement(
+                        "button"
+                    );
+
+                conversationButton.className =
+                    "conversation-button";
+
+                conversationButton.textContent =
+                    "💬 Open Conversation";
+
+
+                conversationButton.onclick =
+                    function() {
+
+                        openConversation(
+                            requestId,
+                            skillName
+                        );
+
+                    };
+
+
+                requestCard.appendChild(
+                    conversationButton
+                );
+
+            }
+
+
+            /*
+             * PENDING
+             */
+
+            else if (
+                statusLower === "pending" ||
+                statusLower === "requested"
+            ) {
+
+                const waiting =
+                    document.createElement("p");
+
+                waiting.className =
+                    "waiting-message";
+
+                waiting.textContent =
+                    "⏳ Waiting for mentor to accept the request.";
+
+                requestCard.appendChild(
+                    waiting
+                );
+
+            }
+
+
+            /*
+             * REJECTED
+             */
+
+            else if (
+                statusLower === "rejected" ||
+                statusLower === "declined"
+            ) {
+
+                const rejected =
+                    document.createElement("p");
+
+                rejected.className =
+                    "rejected-message";
+
+                rejected.textContent =
+                    "✕ This request was rejected.";
+
+                requestCard.appendChild(
+                    rejected
+                );
+
+            }
+
+
+            requestsContainer.appendChild(
+                requestCard
+            );
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Request loading error:",
+            error
+        );
+
+        requestsContainer.innerHTML = `
+            <p class="request-message">
+                Failed to load requests.
+                Please check the backend.
+            </p>
+        `;
+
+    }
+
+}
+
+
+/* LOAD REQUESTS WHEN PAGE OPENS */
+
+loadMyRequests();
+
+
+/* LOGOUT */
+
+async function logoutUser() {
+
+    const userData =
+        localStorage.getItem("user") ||
+        localStorage.getItem("latestUser");
+
+    let user = null;
+
+    if (userData) {
+
+        try {
+
+            user =
+                JSON.parse(userData);
+
+        } catch (error) {
+
+            console.log(
+                "Logout user data error"
+            );
+
+        }
+
+    }
+
+    if (user && user.id) {
+
+        try {
+
+            await fetch(
+                "http://localhost:5000/api/users/logout/" +
+                user.id,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    }
+                }
+            );
+
+        } catch (error) {
+
+            console.log(
+                "Logout activity update failed"
+            );
+
+        }
+
+    }
+
+    localStorage.removeItem("user");
+    localStorage.removeItem("latestUser");
+    localStorage.removeItem("userId");
+
+    window.location.href =
+        "index.html";
+
+}
+
+</script>
+
 </body>
 </html>

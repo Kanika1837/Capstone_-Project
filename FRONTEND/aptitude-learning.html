@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Aptitude Preparation | Swap Skill</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f8f9fc;
+            color: #172b4d;
+        }
+
+        header {
+            background: #172b4d;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 950px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px #00000015;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .progress-box {
+            margin-bottom: 25px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 15px;
+            background: #e5e5e5;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: #e5b93f;
+            transition: 0.3s;
+        }
+
+        .lesson {
+            border: 1px solid #ddd;
+            padding: 18px;
+            margin: 12px 0;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .lesson:hover {
+            background: #fff9df;
+        }
+
+        .lesson h3 {
+            margin-bottom: 8px;
+        }
+
+        .lesson-content {
+            display: none;
+            margin-top: 15px;
+            line-height: 1.7;
+            color: #444;
+        }
+
+        .example-box,
+        .practice-box {
+            background: #f8f9fc;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 5px solid #e5b93f;
+            border-radius: 6px;
+        }
+
+        .practice-box {
+            background: #fff9df;
+        }
+
+        .practice-box input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #172b4d;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background: #e5b93f;
+            color: #172b4d;
+        }
+
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        #certificateBtn {
+            display: none;
+            background: #e5b93f;
+            color: #172b4d;
+            font-weight: bold;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h2>Swap Skill</h2>
+    </header>
+
+    <div class="container">
+
+        <h1>Aptitude Preparation</h1>
+
+        <p class="description">
+            Learn aptitude concepts, understand examples and practise placement questions.
+        </p>
+
+        <div class="progress-box">
+            <strong>
+                Course Progress:
+                <span id="progressText">0%</span>
+            </strong>
+
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+        </div>
+
+        <div id="lessons"></div>
+
+        <button id="certificateBtn" onclick="generateCertificate()">
+            Generate Certificate
+        </button>
+
+    </div>
+
+    <script>
+        const lessons = [
+            {
+                title: "Lesson 1: Number Systems",
+                explanation: `
+                    <p><strong>What is a Number System?</strong></p>
+
+                    <p>
+                    Number System is the study of different types of numbers.
+                    It is an important basic topic in aptitude preparation.
+                    </p>
+
+                    <p>
+                    We use natural numbers, whole numbers, integers, prime numbers,
+                    even numbers and odd numbers in aptitude problems.
+                    </p>
+
+                    <p><strong>Important topics:</strong></p>
+
+                    <p>
+                    • Factors and multiples<br>
+                    • Divisibility rules<br>
+                    • Prime numbers<br>
+                    • HCF and LCM<br>
+                    • Remainders
+                    </p>
+                `,
+                example: `
+                    <p><strong>Example:</strong></p>
+
+                    <p>
+                    Find the HCF of 12 and 18.
+                    </p>
+
+                    <p>
+                    Factors of 12 = 1, 2, 3, 4, 6, 12<br>
+                    Factors of 18 = 1, 2, 3, 6, 9, 18
+                    </p>
+
+                    <p>
+                    Common factors = 1, 2, 3, 6
+                    </p>
+
+                    <p><strong>Answer: HCF = 6</strong></p>
+                `,
+                practice: `
+                    <p><strong>Practice Question:</strong></p>
+
+                    <p>Find the HCF of 16 and 24.</p>
+
+                    <input type="number" id="answer0" placeholder="Enter your answer">
+
+                    <button onclick="checkAnswer(0, 8)">Check Answer</button>
+
+                    <p class="result" id="result0"></p>
+                `
+            },
+
+            {
+                title: "Lesson 2: Percentages",
+                explanation: `
+                    <p><strong>What is Percentage?</strong></p>
+
+                    <p>
+                    Percentage means a value out of 100.
+                    It is used in marks, discounts, salary calculations and exams.
+                    </p>
+
+                    <p><strong>Formula:</strong></p>
+
+                    <p>
+                    Percentage = (Part / Total) × 100
+                    </p>
+                `,
+                example: `
+                    <p><strong>Example:</strong></p>
+
+                    <p>
+                    A student scores 40 marks out of 50.
+                    Find the percentage.
+                    </p>
+
+                    <p>
+                    Percentage = (40 / 50) × 100
+                    </p>
+
+                    <p>
+                    Percentage = 80%
+                    </p>
+
+                    <p><strong>Answer: 80%</strong></p>
+                `,
+                practice: `
+                    <p><strong>Practice Question:</strong></p>
+
+                    <p>
+                    A student scores 30 marks out of 60.
+                    Find the percentage.
+                    </p>
+
+                    <input type="number" id="answer1" placeholder="Enter percentage">
+
+                    <button onclick="checkAnswer(1, 50)">Check Answer</button>
+
+                    <p class="result" id="result1"></p>
+                `
+            },
+
+            {
+                title: "Lesson 3: Profit and Loss",
+                explanation: `
+                    <p><strong>What is Profit and Loss?</strong></p>
+
+                    <p>
+                    Profit and loss problems compare the cost price and selling price
+                    of a product.
+                    </p>
+
+                    <p><strong>Formulas:</strong></p>
+
+                    <p>
+                    Profit = Selling Price − Cost Price<br>
+                    Loss = Cost Price − Selling Price<br>
+                    Profit Percentage = (Profit / Cost Price) × 100
+                    </p>
+                `,
+                example: `
+                    <p><strong>Example:</strong></p>
+
+                    <p>
+                    Cost Price = ₹200<br>
+                    Selling Price = ₹250
+                    </p>
+
+                    <p>
+                    Profit = 250 − 200 = ₹50
+                    </p>
+
+                    <p>
+                    Profit Percentage = (50 / 200) × 100 = 25%
+                    </p>
+
+                    <p><strong>Answer: 25% Profit</strong></p>
+                `,
+                practice: `
+                    <p><strong>Practice Question:</strong></p>
+
+                    <p>
+                    Cost Price = ₹400<br>
+                    Selling Price = ₹500<br>
+                    Find the profit percentage.
+                    </p>
+
+                    <input type="number" id="answer2" placeholder="Enter profit percentage">
+
+                    <button onclick="checkAnswer(2, 25)">Check Answer</button>
+
+                    <p class="result" id="result2"></p>
+                `
+            },
+
+            {
+                title: "Lesson 4: Time and Work",
+                explanation: `
+                    <p><strong>What is Time and Work?</strong></p>
+
+                    <p>
+                    Time and Work problems help us calculate how much time
+                    a person or group needs to complete a task.
+                    </p>
+
+                    <p>
+                    If a person completes a task in 10 days,
+                    their one-day work is 1/10.
+                    </p>
+                `,
+                example: `
+                    <p><strong>Example:</strong></p>
+
+                    <p>
+                    A person completes a work in 5 days.
+                    </p>
+
+                    <p>
+                    One-day work = 1/5
+                    </p>
+
+                    <p>
+                    Therefore, the person completes 1/5 of the work every day.
+                    </p>
+                `,
+                practice: `
+                    <p><strong>Practice Question:</strong></p>
+
+                    <p>
+                    A person completes a work in 8 days.
+                    What fraction of the work is completed in one day?
+                    </p>
+
+                    <input type="text" id="answer3" placeholder="Example: 1/8">
+
+                    <button onclick="checkAnswer(3, '1/8')">Check Answer</button>
+
+                    <p class="result" id="result3"></p>
+                `
+            },
+
+            {
+                title: "Lesson 5: Ratios and Averages",
+                explanation: `
+                    <p><strong>What is Ratio?</strong></p>
+
+                    <p>
+                    A ratio compares two or more quantities.
+                    </p>
+
+                    <p>
+                    Example: If there are 2 boys and 3 girls,
+                    the ratio of boys to girls is 2:3.
+                    </p>
+
+                    <p><strong>Average Formula:</strong></p>
+
+                    <p>
+                    Average = Sum of Values / Number of Values
+                    </p>
+                `,
+                example: `
+                    <p><strong>Example:</strong></p>
+
+                    <p>
+                    Find the average of 10, 20 and 30.
+                    </p>
+
+                    <p>
+                    Average = (10 + 20 + 30) / 3
+                    </p>
+
+                    <p>
+                    Average = 60 / 3 = 20
+                    </p>
+
+                    <p><strong>Answer: 20</strong></p>
+                `,
+                practice: `
+                    <p><strong>Practice Question:</strong></p>
+
+                    <p>
+                    Find the average of 15, 25 and 35.
+                    </p>
+
+                    <input type="number" id="answer4" placeholder="Enter average">
+
+                    <button onclick="checkAnswer(4, 25)">Check Answer</button>
+
+                    <p class="result" id="result4"></p>
+                `
+            },
+
+            {
+                title: "Lesson 6: Logical Reasoning",
+                explanation: `
+                    <p><strong>What is Logical Reasoning?</strong></p>
+
+                    <p>
+                    Logical reasoning helps us analyse information and find answers
+                    using logical thinking.
+                    </p>
+
+                    <p><strong>Important topics:</strong></p>
+
+                    <p>
+                    • Number series<br>
+                    • Coding and decoding<br>
+                    • Blood relations<br>
+                    • Direction sense<br>
+                    • Syllogisms<br>
+                    • Puzzles
+                    </p>
+                `,
+                example: `
+                    <p><strong>Example:</strong></p>
+
+                    <p>
+                    Find the next number:
+                    </p>
+
+                    <p>
+                    2, 4, 6, 8, ?
+                    </p>
+
+                    <p>
+                    The numbers increase by 2 each time.
+                    </p>
+
+                    <p><strong>Answer: 10</strong></p>
+                `,
+                practice: `
+                    <p><strong>Practice Question:</strong></p>
+
+                    <p>
+                    Find the next number:
+                    </p>
+
+                    <p>
+                    5, 10, 15, 20, ?
+                    </p>
+
+                    <input type="number" id="answer5" placeholder="Enter next number">
+
+                    <button onclick="checkAnswer(5, 25)">Check Answer</button>
+
+                    <p class="result" id="result5"></p>
+                `
+            }
+        ];
+
+        const storageKey = "aptitudePreparationCompletedLessons";
+
+        let completedLessons =
+            JSON.parse(localStorage.getItem(storageKey)) || [];
+
+        const lessonsContainer =
+            document.getElementById("lessons");
+
+        function displayLessons() {
+            lessonsContainer.innerHTML = "";
+
+            lessons.forEach((lesson, index) => {
+                const lessonBox = document.createElement("div");
+
+                lessonBox.className = "lesson";
+
+                const isCompleted =
+                    completedLessons.includes(index);
+
+                lessonBox.innerHTML = `
+                    <h3>
+                        ${lesson.title}
+                        ${isCompleted ? " ✅" : ""}
+                    </h3>
+
+                    <div class="lesson-content" id="content-${index}">
+                        ${lesson.explanation}
+
+                        <div class="example-box">
+                            ${lesson.example}
+                        </div>
+
+                        <div class="practice-box">
+                            ${lesson.practice}
+                        </div>
+
+                        <button onclick="completeLesson(${index}, event)">
+                            ${isCompleted ? "Completed" : "Complete Lesson"}
+                        </button>
+                    </div>
+                `;
+
+                lessonBox.addEventListener("click", function () {
+                    const content =
+                        document.getElementById(`content-${index}`);
+
+                    if (content.style.display === "block") {
+                        content.style.display = "none";
+                    } else {
+                        content.style.display = "block";
+                    }
+                });
+
+                lessonsContainer.appendChild(lessonBox);
+            });
+
+            updateProgress();
+        }
+
+        function checkAnswer(index, correctAnswer) {
+            const input =
+                document.getElementById(`answer${index}`).value.trim();
+
+            const result =
+                document.getElementById(`result${index}`);
+
+            if (input.toLowerCase() === String(correctAnswer).toLowerCase()) {
+                result.innerText = "Correct Answer! 🎉";
+                result.style.color = "green";
+            } else {
+                result.innerText = "Try again. Keep practising!";
+                result.style.color = "red";
+            }
+        }
+
+        function completeLesson(index, event) {
+            event.stopPropagation();
+
+            if (!completedLessons.includes(index)) {
+                completedLessons.push(index);
+
+                localStorage.setItem(
+                    storageKey,
+                    JSON.stringify(completedLessons)
+                );
+            }
+
+            displayLessons();
+        }
+
+        function updateProgress() {
+            const percentage = Math.round(
+                (completedLessons.length / lessons.length) * 100
+            );
+
+            document.getElementById("progressText").innerText =
+                percentage + "%";
+
+            document.getElementById("progressBar").style.width =
+                percentage + "%";
+
+            if (completedLessons.length === lessons.length) {
+                document.getElementById("certificateBtn").style.display =
+                    "block";
+            }
+        }
+
+        function generateCertificate() {
+            localStorage.setItem(
+                "certificateCourse",
+                "Aptitude Preparation"
+            );
+
+            window.location.href = "certificate.html";
+        }
+
+        displayLessons();
+    </script>
+
+</body>
+
+</html>

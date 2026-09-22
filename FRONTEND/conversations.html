@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Conversation - SwapSkill</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #ffffff;
+            color: #172b4d;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 7%;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #e5b93f;
+        }
+
+        header a {
+            text-decoration: none;
+            color: #172b4d;
+            font-weight: bold;
+        }
+
+        .chat-container {
+            width: 90%;
+            max-width: 850px;
+            height: 75vh;
+            margin: 40px auto;
+            border: 1px solid #eeeeee;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(23, 43, 77, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background: #fff4c7;
+            padding: 22px;
+            font-size: 21px;
+            font-weight: bold;
+            color: #172b4d;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .messages {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            background: #ffffff;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 12px 16px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            word-wrap: break-word;
+            clear: both;
+        }
+
+        .sent {
+            float: right;
+            background: #fff4c7;
+            color: #172b4d;
+        }
+
+        .received {
+            float: left;
+            background: #f1f1f1;
+            color: #333333;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+            padding: 18px;
+            border-top: 1px solid #eeeeee;
+            background: #fafafa;
+        }
+
+        .input-area input {
+            flex: 1;
+            padding: 13px;
+            border: 1px solid #cccccc;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .input-area button {
+            padding: 13px 25px;
+            border: none;
+            border-radius: 8px;
+            background: #e5b93f;
+            color: #172b4d;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .input-area button:hover {
+            background: #d4a92f;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #777777;
+            margin-top: 30px;
+        }
+
+        .back-button {
+            display: block;
+            width: fit-content;
+            margin: 25px auto;
+            padding: 12px 25px;
+            background: #e5b93f;
+            color: #172b4d;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .chat-container {
+                width: 95%;
+                height: 70vh;
+            }
+
+            .message {
+                max-width: 85%;
+            }
+
+            header {
+                padding: 18px 5%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            Swap<span>Skill</span>
+        </div>
+
+        <a href="profile.html">Back to Profile</a>
+    </header>
+
+    <div class="chat-container">
+
+        <div class="chat-header" id="chatHeader">
+            Loading conversation...
+        </div>
+
+        <div class="messages" id="messages">
+            <p class="empty-message">Loading messages...</p>
+        </div>
+
+        <div class="input-area">
+            <input
+                type="text"
+                id="messageInput"
+                placeholder="Type your message..."
+            >
+
+            <button onclick="sendMessage()">
+                Send
+            </button>
+        </div>
+
+    </div>
+
+    <a href="profile.html" class="back-button">
+        Back to Profile
+    </a>
+
+    <script>
+        const API_URL = "http://localhost:5000/api";
+
+        let currentUser = null;
+        let currentUserId = null;
+        let selectedUserId = null;
+        let selectedUserName = "User";
+
+        const storedUser = localStorage.getItem("user");
+        const conversationUserId =
+            localStorage.getItem("conversationUserId");
+
+        if (!storedUser || !conversationUserId) {
+
+            alert("Invalid conversation. Please select an accepted request.");
+
+            window.location.href = "profile.html";
+
+        } else {
+
+            try {
+
+                currentUser = JSON.parse(storedUser);
+                currentUserId = Number(currentUser.id);
+                selectedUserId = Number(conversationUserId);
+
+                if (!currentUserId || !selectedUserId) {
+                    throw new Error("Invalid user ID");
+                }
+
+                loadOtherUser();
+                loadMessages();
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert("Unable to open conversation.");
+
+                window.location.href = "profile.html";
+            }
+        }
+
+
+        async function loadOtherUser() {
+
+            try {
+
+                const response = await fetch(
+                    `${API_URL}/users/${selectedUserId}`
+                );
+
+                if (!response.ok) {
+                    throw new Error("User details not found");
+                }
+
+                const user = await response.json();
+
+                selectedUserName =
+                    user.name || user.username || "User";
+
+                document.getElementById("chatHeader").innerText =
+                    "💬 Conversation with " + selectedUserName;
+
+            } catch (error) {
+
+                console.error("User loading error:", error);
+
+                document.getElementById("chatHeader").innerText =
+                    "💬 Conversation";
+            }
+        }
+
+
+        async function loadMessages() {
+
+            try {
+
+                const response = await fetch(
+                    `${API_URL}/messages`
+                );
+
+                if (!response.ok) {
+                    throw new Error("Failed to load messages");
+                }
+
+                const allMessages = await response.json();
+
+                const conversationMessages = allMessages.filter(message => {
+
+                    const senderId = Number(message.sender_id);
+                    const receiverId = Number(message.receiver_id);
+
+                    return (
+                        (senderId === currentUserId &&
+                            receiverId === selectedUserId) ||
+                        (senderId === selectedUserId &&
+                            receiverId === currentUserId)
+                    );
+                });
+
+                const messagesBox =
+                    document.getElementById("messages");
+
+                messagesBox.innerHTML = "";
+
+                if (conversationMessages.length === 0) {
+
+                    messagesBox.innerHTML = `
+                        <p class="empty-message">
+                            No messages yet. Start your conversation!
+                        </p>
+                    `;
+
+                    return;
+                }
+
+                conversationMessages.forEach(message => {
+
+                    const messageElement =
+                        document.createElement("div");
+
+                    const isSent =
+                        Number(message.sender_id) === currentUserId;
+
+                    messageElement.className =
+                        "message " + (isSent ? "sent" : "received");
+
+                    messageElement.textContent = message.message;
+
+                    messagesBox.appendChild(messageElement);
+                });
+
+                messagesBox.scrollTop = messagesBox.scrollHeight;
+
+            } catch (error) {
+
+                console.error("Message loading error:", error);
+
+                document.getElementById("messages").innerHTML = `
+                    <p class="empty-message">
+                        Unable to load messages.
+                    </p>
+                `;
+            }
+        }
+
+
+        async function sendMessage() {
+
+            const input =
+                document.getElementById("messageInput");
+
+            const messageText = input.value.trim();
+
+            if (!messageText) {
+                alert("Please type a message.");
+                return;
+            }
+
+            if (!currentUserId || !selectedUserId) {
+                alert("Conversation details not found.");
+                return;
+            }
+
+            try {
+
+                const response = await fetch(
+                    `${API_URL}/messages`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            sender_id: currentUserId,
+                            receiver_id: selectedUserId,
+                            message: messageText
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(
+                        data.message || "Message sending failed"
+                    );
+                }
+
+                input.value = "";
+
+                loadMessages();
+
+            } catch (error) {
+
+                console.error("Send message error:", error);
+
+                alert("Message sending failed.");
+            }
+        }
+
+
+        document
+            .getElementById("messageInput")
+            .addEventListener("keypress", function(event) {
+
+                if (event.key === "Enter") {
+                    sendMessage();
+                }
+
+            });
+    </script>
+
+</body>
+
+</html>

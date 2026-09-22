@@ -1,17 +1,86 @@
-const form = document.querySelector("form");
+document.addEventListener("DOMContentLoaded", function () {
 
-form.addEventListener("submit", function (event) {
-    event.preventDefault();
+    const loginForm = document.getElementById("loginForm");
 
-    const email = document.querySelector('input[type="email"]').value.trim();
-    const password = document.querySelector('input[type="password"]').value.trim();
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
 
-    if (email === "" || password === "") {
-        alert("Please enter your email and password.");
-        return;
-    }
+    const message =
+        document.getElementById("message") ||
+        document.getElementById("passwordError");
 
-    alert("Login successful!");
+    loginForm.addEventListener("submit", async function (event) {
 
-    window.location.href = "dashboard.html";
+        event.preventDefault();
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        message.textContent = "";
+
+        if (!email || !password) {
+            message.textContent = "Please enter email and password";
+            message.style.color = "red";
+            return;
+        }
+
+        try {
+            const response = await fetch(
+                "http://localhost:5000/api/users/login",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                message.textContent =
+                    data.message || "Invalid email or password";
+
+                message.style.color = "red";
+                return;
+            }
+
+            // Save logged-in user details
+            localStorage.setItem(
+                "user",
+                JSON.stringify(data.user)
+            );
+
+            localStorage.setItem(
+                "latestUser",
+                JSON.stringify(data.user)
+            );
+
+            localStorage.setItem(
+                "userId",
+                data.user.id
+            );
+
+            message.textContent =
+                "Login successful! Redirecting...";
+
+            message.style.color = "green";
+
+            setTimeout(function () {
+                window.location.href = "dashboard.html";
+            }, 1000);
+
+        } catch (error) {
+            console.error("Login error:", error);
+
+            message.textContent =
+                "Backend connection failed";
+
+            message.style.color = "red";
+        }
+    });
 });

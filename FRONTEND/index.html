@@ -1,314 +1,539 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Swap Skills | Learn, Share, Grow</title>
+    <title>Swap Skill | Learn & Share</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #ffffff;
+            color: #172b4d;
+        }
+
+        header {
+            background: white;
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: #172b4d;
+        }
+
+        .logo span {
+            color: #e5b93f;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #172b4d;
+            margin: 0 10px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: #d3a52d;
+        }
+
+        .signup-btn {
+            background: #e5b93f;
+            padding: 12px 18px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .hero {
+            min-height: 470px;
+            background:
+                linear-gradient(
+                    rgba(23, 43, 77, 0.88),
+                    rgba(23, 43, 77, 0.88)
+                ),
+                url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f")
+                center/cover;
+
+            display: flex;
+            align-items: center;
+            padding: 70px 10%;
+        }
+
+        .hero-content {
+            max-width: 560px;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero-content h1 span {
+            color: #e5b93f;
+        }
+
+        .hero-content p {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: #e1e7f0;
+        }
+
+        .hero-btn {
+            background: #e5b93f;
+            color: #172b4d;
+            padding: 15px 28px;
+            border: none;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .section {
+            padding: 70px 10%;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 30px;
+            margin-bottom: 15px;
+            color: #172b4d;
+        }
+
+        .section-subtitle {
+            color: #777;
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+
+        .features {
+            display: flex;
+            justify-content: space-around;
+            gap: 30px;
+        }
+
+        .feature {
+            max-width: 280px;
+            padding: 20px;
+        }
+
+        .feature-icon {
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .feature h3 {
+            margin-bottom: 12px;
+        }
+
+        .feature p {
+            color: #777;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .about {
+            background: #f7f8fa;
+        }
+
+        .about-content {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .about-content p {
+            color: #666;
+            line-height: 1.9;
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+
+        .about-boxes {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 35px;
+        }
+
+        .about-box {
+            background: white;
+            padding: 25px;
+            width: 250px;
+            border-radius: 8px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .about-box h3 {
+            margin: 12px 0;
+        }
+
+        .about-box p {
+            font-size: 14px;
+            color: #777;
+        }
+
+        .about-icon {
+            font-size: 32px;
+        }
+
+        .community {
+            background: white;
+        }
+
+        .community-content {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .community-card {
+            width: 280px;
+            padding: 30px 22px;
+            border: 1px solid #eeeeee;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .community-card h3 {
+            margin: 15px 0 10px;
+        }
+
+        .community-card p {
+            color: #777;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .community-icon {
+            font-size: 38px;
+        }
+
+        .contact {
+            background: #f7f8fa;
+        }
+
+        .contact-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .contact-card {
+            background: white;
+            padding: 25px;
+            width: 240px;
+            border-radius: 8px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .contact-card .icon {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .contact-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .contact-card p {
+            color: #777;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .contact-card a {
+            color: #172b4d;
+            text-decoration: none;
+        }
+
+        .contact-card a:hover {
+            color: #d3a52d;
+            text-decoration: underline;
+        }
+
+        footer {
+            background: #172b4d;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        footer p {
+            font-size: 14px;
+            margin: 8px;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav {
+                text-align: center;
+                line-height: 2.8;
+            }
+
+            .hero-content h1 {
+                font-size: 35px;
+            }
+
+            .features,
+            .about-boxes {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .section {
+                padding: 50px 6%;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- NAVBAR -->
-    <header class="navbar">
-
+    <header>
         <div class="logo">
-            <span class="logo-icon">S</span>
-            <span>Swap Skills</span>
+            Swap<span>Skill</span>
         </div>
 
         <nav>
-            <a href="#home">Home</a>
-            <a href="#explore">Explore Skills</a>
-            <a href="#how">How We Work</a>
+            <a href="index.html">Home</a>
+            <a href="skills.html">Explore Skills</a>
+            <a href="#how">How It Works</a>
             <a href="#community">Community</a>
             <a href="#about">About Us</a>
-        </nav>
-
-        <div class="nav-buttons">
-            <a href="login.html" class="login-btn">Login</a>
+            <a href="#contact">Contact Us</a>
+            <a href="login.html">Login</a>
+            <a href="admin-login.html">Admin Login</a>
             <a href="signup.html" class="signup-btn">Sign Up</a>
-        </div>
-
+        </nav>
     </header>
 
+    <section class="hero">
+        <div class="hero-content">
+            <h1>
+                Learn Skills.<br>
+                Share Skills.<br>
+                <span>Grow Together.</span>
+            </h1>
 
-    <!-- HERO SECTION -->
-    <main id="home">
+            <p>
+                Connect with passionate learners and skill sharers.
+                Exchange knowledge, discover new talents, and grow
+                together with Swap Skill.
+            </p>
 
-        <section class="hero">
+            <button class="hero-btn"
+                onclick="window.location.href='signup.html'">
+                Get Started
+            </button>
+        </div>
+    </section>
 
-            <!-- LEFT SIDE -->
-            <div class="hero-content">
+    <section class="section" id="how">
+        <h2 class="section-title">How It Works</h2>
 
-                <div class="small-badge">
-                    ♡ &nbsp; Learn. Share. Grow.
-                </div>
+        <p class="section-subtitle">
+            Learn new skills and share your knowledge in three simple steps.
+        </p>
 
-                <h1>
-                    Learn skills.<br>
-                    <span>Share skills.</span><br>
-                    Grow together.
-                </h1>
+        <div class="features">
 
+            <div class="feature">
+                <div class="feature-icon">🎓</div>
+                <h3>Learn New Skills</h3>
                 <p>
-                    Swap Skills is a community platform where you can
-                    exchange your skills, learn new things and build
-                    meaningful connections.
+                    Discover useful skills and learn from
+                    talented people in our community.
                 </p>
-
-                <div class="hero-buttons">
-                    <button class="primary-btn">
-                        Start Learning &nbsp; →
-                    </button>
-
-                    <button class="secondary-btn">
-                        ▶ &nbsp; How It Works
-                    </button>
-                </div>
-
-                <div class="members">
-
-                    <div class="avatars">
-                        <div>👩🏻</div>
-                        <div>👨🏻</div>
-                        <div>👩🏽</div>
-                        <div>👨🏽</div>
-                        <div>👩🏻</div>
-                    </div>
-
-                    <div class="member-count">
-                        <strong>2K+</strong>
-                        <small>Active<br>Members</small>
-                    </div>
-
-                </div>
-
             </div>
 
-
-            <!-- RIGHT SIDE -->
-            <div class="hero-visual">
-
-                <div class="circle-bg"></div>
-
-                <div class="people-card">
-                    <div class="people-image">
-                        <div class="person">👩🏻‍💻</div>
-                        <div class="person">👩🏽‍💻</div>
-                    </div>
-
-                    <div class="laptop">
-                        <span>S</span>
-                    </div>
-                </div>
-
-
-                <!-- LEARN CARD -->
-                <div class="floating-card learn-card">
-                    <span class="card-icon">👥</span>
-                    <div>
-                        <strong>Learn from</strong>
-                        <small>amazing people</small>
-                    </div>
-                </div>
-
-
-                <!-- SHARE CARD -->
-                <div class="floating-card share-card">
-                    <span class="card-icon">✦</span>
-                    <div>
-                        <strong>Share your skills</strong>
-                        <small>and inspire others</small>
-                    </div>
-                </div>
-
-
-                <!-- POPULAR SKILLS -->
-                <div class="skills-card">
-
-                    <h3>🔥 Popular Skills</h3>
-
-                    <div class="skill-item">
-                        <span class="skill-icon pink">‹/›</span>
-                        <div>
-                            <strong>Web Development</strong>
-                            <small>1.2K learners</small>
-                        </div>
-                    </div>
-
-                    <div class="skill-item">
-                        <span class="skill-icon purple">✣</span>
-                        <div>
-                            <strong>UI/UX Design</strong>
-                            <small>980 learners</small>
-                        </div>
-                    </div>
-
-                    <div class="skill-item">
-                        <span class="skill-icon orange">📷</span>
-                        <div>
-                            <strong>Photography</strong>
-                            <small>750 learners</small>
-                        </div>
-                    </div>
-
-                    <div class="skill-item">
-                        <span class="skill-icon green">♧</span>
-                        <div>
-                            <strong>Python Programming</strong>
-                            <small>1.1K learners</small>
-                        </div>
-                    </div>
-
-                    <div class="skill-item">
-                        <span class="skill-icon violet">📣</span>
-                        <div>
-                            <strong>Digital Marketing</strong>
-                            <small>650 learners</small>
-                        </div>
-                    </div>
-
-                    <button class="explore-btn">
-                        Explore More &nbsp; →
-                    </button>
-
-                </div>
-
+            <div class="feature">
+                <div class="feature-icon">🤝</div>
+                <h3>Share Your Knowledge</h3>
+                <p>
+                    Share your expertise and help others
+                    improve their skills.
+                </p>
             </div>
 
-        </section>
-
-
-        <!-- HOW IT WORKS -->
-        <section class="how-section" id="how">
-
-            <div class="section-heading">
-                <span>SIMPLE STEPS</span>
-                <h2>How Swap Skills Works</h2>
+            <div class="feature">
+                <div class="feature-icon">🌱</div>
+                <h3>Grow Together</h3>
+                <p>
+                    Build meaningful connections and
+                    develop your talents together.
+                </p>
             </div>
 
-            <div class="steps">
+        </div>
+    </section>
 
-                <div class="step-card">
+    <section class="section about" id="about">
+        <h2 class="section-title">About Us</h2>
 
-                    <div class="step-number">01</div>
-
-                    <div class="step-icon">⌕</div>
-
-                    <div>
-                        <h3>Find Skills</h3>
-                        <p>
-                            Explore skills you want to learn
-                            and find the perfect match.
-                        </p>
-                    </div>
-
-                </div>
-
-
-                <div class="arrow">→</div>
-
-
-                <div class="step-card">
-
-                    <div class="step-number">02</div>
-
-                    <div class="step-icon">🤝</div>
-
-                    <div>
-                        <h3>Connect & Swap</h3>
-                        <p>
-                            Connect with others and exchange
-                            skills through swap requests.
-                        </p>
-                    </div>
-
-                </div>
-
-
-                <div class="arrow">→</div>
-
-
-                <div class="step-card">
-
-                    <div class="step-number">03</div>
-
-                    <div class="step-icon">🚀</div>
-
-                    <div>
-                        <h3>Learn & Grow</h3>
-                        <p>
-                            Learn new skills, share your
-                            knowledge and grow together.
-                        </p>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- STATS -->
-        <section class="stats">
-
-            <div>
-                <strong>2K+</strong>
-                <span>Active Members</span>
-            </div>
-
-            <div>
-                <strong>500+</strong>
-                <span>Skills Available</span>
-            </div>
-
-            <div>
-                <strong>1.8K+</strong>
-                <span>Successful Swaps</span>
-            </div>
-
-            <div>
-                <strong>98%</strong>
-                <span>Happy Learners</span>
-            </div>
-
-        </section>
-
-
-        <!-- COMMUNITY -->
-        <section id="community" class="extra-section">
-
-            <span>OUR COMMUNITY</span>
-
-            <h2>Learn from each other.</h2>
-
+        <div class="about-content">
             <p>
-                Share what you know, discover new talents and
-                connect with people who are ready to learn.
+                Swap Skill is a skill-sharing and learning platform
+                designed to connect people who want to learn and
+                share their knowledge with others.
             </p>
 
-        </section>
-
-
-        <!-- ABOUT -->
-        <section id="about" class="extra-section">
-
-            <span>ABOUT SWAP SKILLS</span>
-
-            <h2>Skills are better when shared.</h2>
-
             <p>
-                Swap Skills helps learners and skill providers
-                connect, collaborate and grow together.
+                Our platform encourages users to exchange skills,
+                discover new talents, and build meaningful learning
+                connections in a supportive environment.
             </p>
 
-        </section>
+            <p>
+                We believe that everyone has something valuable
+                to teach and something new to learn.
+            </p>
+        </div>
 
-    </main>
+        <div class="about-boxes">
+
+            <div class="about-box">
+                <div class="about-icon">🎯</div>
+                <h3>Our Mission</h3>
+                <p>
+                    To make skill sharing accessible and
+                    encourage continuous learning.
+                </p>
+            </div>
+
+            <div class="about-box">
+                <div class="about-icon">🌍</div>
+                <h3>Our Vision</h3>
+                <p>
+                    To build a connected community where
+                    knowledge has no boundaries.
+                </p>
+            </div>
+
+            <div class="about-box">
+                <div class="about-icon">💡</div>
+                <h3>Our Values</h3>
+                <p>
+                    Collaboration, creativity, growth,
+                    and knowledge sharing.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="section community" id="community">
+        <h2 class="section-title">Our Community</h2>
+
+        <p class="section-subtitle">
+            Connect, collaborate, and grow with like-minded learners.
+        </p>
+
+        <div class="community-content">
+
+            <div class="community-card">
+                <div class="community-icon">👥</div>
+                <h3>Meet New People</h3>
+                <p>
+                    Connect with learners and skill sharers
+                    who have similar interests.
+                </p>
+            </div>
+
+            <div class="community-card">
+                <div class="community-icon">💬</div>
+                <h3>Share Ideas</h3>
+                <p>
+                    Exchange ideas, discuss topics, and
+                    learn from different experiences.
+                </p>
+            </div>
+
+            <div class="community-card">
+                <div class="community-icon">🚀</div>
+                <h3>Grow Together</h3>
+                <p>
+                    Support each other and improve your
+                    skills through collaboration.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="section contact" id="contact">
+        <h2 class="section-title">Contact Us</h2>
+
+        <p class="section-subtitle">
+            Have questions or suggestions? We would love to hear from you.
+        </p>
+
+        <div class="contact-container">
+
+            <div class="contact-card">
+                <div class="icon">📧</div>
+                <h3>Email Us</h3>
+                <p>
+                    <a href="mailto:swap.skill@example.com">
+                        swap.skill@example.com
+                    </a>
+                </p>
+            </div>
+
+            <div class="contact-card">
+                <div class="icon">📞</div>
+                <h3>Call Us</h3>
+                <p>
+                    <a href="tel:+919876543210">
+                        +91 98765 43210
+                    </a>
+                </p>
+            </div>
+
+            <div class="contact-card">
+                <div class="icon">📍</div>
+                <h3>Our Location</h3>
+                <p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Tamil+Nadu+India"
+                       target="_blank">
+                        Tamil Nadu, India
+                    </a>
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Swap Skill. All Rights Reserved.</p>
+        <p>Learn. Share. Grow Together.</p>
+    </footer>
 
 </body>
+
 </html>

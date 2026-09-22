@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Assessment - SwapSkill</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #ffffff;
+            color: #172b4d;
+        }
+
+        header {
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #e5b93f;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #172b4d;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+
+        .hero {
+            background: #172b4d;
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            font-size: 18px;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        .question-card {
+            background: #ffffff;
+            border: 1px solid #e5b93f;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .question-card h3 {
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        .option {
+            display: block;
+            background: #f8f8f8;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .option:hover {
+            background: #fff8d8;
+        }
+
+        .option input {
+            margin-right: 10px;
+        }
+
+        button {
+            display: block;
+            margin: 25px auto;
+            padding: 14px 28px;
+            background: #e5b93f;
+            color: #172b4d;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #172b4d;
+            color: white;
+        }
+
+        #result {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 25px 0;
+            line-height: 1.8;
+        }
+
+        #certificateButton {
+            display: none;
+        }
+
+        footer {
+            background: #172b4d;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin: 8px;
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .container {
+                width: 92%;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                display: inline-block;
+                margin: 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">Swap<span>Skill</span></div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="skills.html">Explore Skills</a>
+            <a href="dashboard.html">Dashboard</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1 id="assessmentTitle">Course Assessment</h1>
+        <p>Answer all questions to complete your assessment.</p>
+    </section>
+
+    <section class="container">
+
+        <form id="assessmentForm"></form>
+
+        <button type="button" onclick="submitAssessment()">
+            Submit Assessment
+        </button>
+
+        <div id="result"></div>
+
+        <button id="certificateButton" onclick="generateCertificate()">
+            Generate Certificate
+        </button>
+
+    </section>
+
+    <footer>
+        <p>&copy; 2026 SwapSkill</p>
+        <p>Learn. Share. Grow together.</p>
+    </footer>
+
+    <script>
+
+        const courseName =
+            localStorage.getItem("certificateCourse") || "Java";
+
+        document.getElementById("assessmentTitle").textContent =
+            courseName + " Assessment";
+
+        const questionBank = {
+
+            "Java": [
+                ["Which keyword is used to create a class in Java?", ["class", "define", "struct", "new"], "a"],
+                ["Which method is the entry point of a Java program?", ["start()", "main()", "run()", "execute()"], "b"],
+                ["Which data type stores whole numbers?", ["float", "char", "int", "boolean"], "c"],
+                ["Which keyword is used to inherit a class?", ["this", "super", "extends", "implements"], "c"],
+                ["Which symbol is used to end a Java statement?", [".", ":", ";", ","], "c"],
+                ["Which concept hides internal implementation details?", ["Inheritance", "Encapsulation", "Polymorphism", "Compilation"], "b"],
+                ["Which keyword is used to create an object?", ["object", "create", "new", "class"], "c"],
+                ["Which collection does not allow duplicate elements?", ["List", "Set", "Array", "String"], "b"],
+                ["Which exception occurs when dividing by zero using integers?", ["IOException", "ArithmeticException", "NullPointerException", "ClassNotFoundException"], "b"],
+                ["Java is mainly a ______ language.", ["procedural", "object-oriented", "markup", "query"], "b"]
+            ],
+
+            "Python": [
+                ["Which symbol is used to write a comment in Python?", ["//", "#", "/*", "--"], "b"],
+                ["Which function is used to display output?", ["display()", "show()", "print()", "output()"], "c"],
+                ["Which data type stores key-value pairs?", ["List", "Tuple", "Dictionary", "Set"], "c"],
+                ["Which keyword is used to define a function?", ["function", "define", "def", "fun"], "c"],
+                ["Which symbol is used for exponentiation in Python?", ["^", "//", "**", "%%"], "c"],
+                ["Which data type is immutable?", ["List", "Dictionary", "Set", "Tuple"], "d"],
+                ["Which function is used to find the length of a list?", ["size()", "length()", "len()", "countAll()"], "c"],
+                ["Which keyword is used for a condition?", ["if", "check", "when", "condition"], "a"],
+                ["Which operator is used for floor division?", ["/", "//", "%", "**"], "b"],
+                ["Python is a ______ programming language.", ["high-level", "machine-level", "assembly", "markup"], "a"]
+            ],
+
+            "Web Development": [
+                ["What does HTML stand for?", ["Hyper Text Markup Language", "High Text Machine Language", "Hyperlink Text Management Language", "Home Tool Markup Language"], "a"],
+                ["Which tag is used to create a paragraph?", ["<p>", "<h1>", "<br>", "<para>"], "a"],
+                ["Which language is used to style a webpage?", ["HTML", "CSS", "SQL", "Java"], "b"],
+                ["Which language is used to add interactivity to webpages?", ["Python", "CSS", "JavaScript", "SQL"], "c"],
+                ["Which HTML tag is used to insert an image?", ["<picture>", "<img>", "<image>", "<src>"], "b"],
+                ["Which CSS property changes text colour?", ["font-style", "background", "color", "text-size"], "c"],
+                ["Which symbol is used to select a class in CSS?", ["#", ".", "*", "&"], "b"],
+                ["Which HTML attribute specifies a link destination?", ["src", "href", "link", "url"], "b"],
+                ["Which keyword declares a variable in JavaScript?", ["var", "int", "string", "define"], "a"],
+                ["What is responsive web design?", ["Design for only computers", "Design that adapts to screen sizes", "Design without CSS", "Design only for mobiles"], "b"]
+            ],
+
+            "Cyber Security": [
+                ["What is the main purpose of cyber security?", ["Increase internet speed", "Protect systems and data", "Create websites", "Store images"], "b"],
+                ["What does the CIA triad represent?", ["Control, Internet, Access", "Confidentiality, Integrity, Availability", "Computer, Information, Antivirus", "Cyber, Internet, Application"], "b"],
+                ["What is phishing?", ["A type of backup", "A fake attempt to steal information", "A programming language", "A network cable"], "b"],
+                ["What does a firewall do?", ["Creates passwords", "Controls network traffic", "Deletes files", "Increases RAM"], "b"],
+                ["What is malware?", ["Malicious software", "A secure password", "A backup device", "A web browser"], "a"],
+                ["What is MFA?", ["Multi-Factor Authentication", "Main File Access", "Multiple Folder Application", "Manual Firewall Access"], "a"],
+                ["What is ransomware?", ["Software that encrypts data and demands payment", "A search engine", "A firewall rule", "A backup method"], "a"],
+                ["What is ethical hacking?", ["Illegal system access", "Authorized security testing", "Deleting websites", "Sharing passwords"], "b"],
+                ["Which is a strong password practice?", ["Using your name", "Using 123456", "Using a long unique password", "Sharing passwords"], "c"],
+                ["Which practice helps prevent SQL Injection?", ["Using parameterized queries", "Sharing database passwords", "Disabling security", "Using simple passwords"], "a"]
+            ],
+
+            "Database SQL": [
+                ["What does SQL stand for?", ["Simple Query Language", "Structured Query Language", "System Query Language", "Standard Question Language"], "b"],
+                ["Which command is used to retrieve records?", ["INSERT", "UPDATE", "SELECT", "DELETE"], "c"],
+                ["Which command creates a table?", ["CREATE TABLE", "MAKE TABLE", "NEW TABLE", "ADD TABLE"], "a"],
+                ["Which command adds a new record?", ["ADD", "INSERT INTO", "CREATE", "INCLUDE"], "b"],
+                ["Which clause is used to filter records?", ["ORDER BY", "GROUP BY", "WHERE", "SELECT"], "c"],
+                ["Which command modifies existing records?", ["UPDATE", "CHANGE", "EDIT", "MODIFY"], "a"],
+                ["Which command removes records?", ["REMOVE", "DELETE", "CLEAR", "DROP RECORD"], "b"],
+                ["Which key uniquely identifies a record?", ["Foreign Key", "Primary Key", "Duplicate Key", "Secondary Key"], "b"],
+                ["Which JOIN returns matching records from both tables?", ["INNER JOIN", "CROSS JOIN", "FULL JOIN", "OUTER JOIN"], "a"],
+                ["Which practice helps prevent SQL Injection?", ["Using parameterized queries", "Sharing credentials", "Disabling security", "Using simple passwords"], "a"]
+            ]
+
+        };
+
+        const questions = questionBank[courseName] || questionBank["Java"];
+
+        function loadQuestions() {
+
+            const form = document.getElementById("assessmentForm");
+
+            form.innerHTML = "";
+
+            questions.forEach((question, index) => {
+
+                const questionNumber = index + 1;
+                const questionText = question[0];
+                const options = question[1];
+
+                let html = `
+                    <div class="question-card">
+                        <h3>${questionNumber}. ${questionText}</h3>
+                `;
+
+                options.forEach((option, optionIndex) => {
+
+                    const optionLetter =
+                        String.fromCharCode(97 + optionIndex);
+
+                    html += `
+                        <label class="option">
+                            <input type="radio"
+                                name="q${questionNumber}"
+                                value="${optionLetter}">
+                            ${option}
+                        </label>
+                    `;
+
+                });
+
+                html += `</div>`;
+
+                form.innerHTML += html;
+
+            });
+
+        }
+
+        function submitAssessment() {
+
+            let score = 0;
+            let unanswered = 0;
+
+            questions.forEach((question, index) => {
+
+                const questionNumber = index + 1;
+
+                const selectedAnswer = document.querySelector(
+                    `input[name="q${questionNumber}"]:checked`
+                );
+
+                if (!selectedAnswer) {
+
+                    unanswered++;
+
+                } else if (
+                    selectedAnswer.value === question[2]
+                ) {
+
+                    score++;
+
+                }
+
+            });
+
+            if (unanswered > 0) {
+
+                alert("Please answer all 10 questions.");
+
+                return;
+            }
+
+            const percentage = (score / questions.length) * 100;
+
+            const result = document.getElementById("result");
+
+            if (percentage >= 60) {
+
+                result.innerHTML =
+                    "Congratulations! You passed the " +
+                    courseName +
+                    " Assessment.<br>" +
+                    "Your Score: " +
+                    score +
+                    " / " +
+                    questions.length +
+                    " (" +
+                    percentage +
+                    "%)";
+
+                localStorage.setItem(
+                    "assessmentPassed_" + courseName,
+                    "true"
+                );
+
+                localStorage.setItem(
+                    "certificateCourse",
+                    courseName
+                );
+
+                document.getElementById("certificateButton").style.display =
+                    "block";
+
+            } else {
+
+                result.innerHTML =
+                    "You did not pass the assessment.<br>" +
+                    "Your Score: " +
+                    score +
+                    " / " +
+                    questions.length +
+                    " (" +
+                    percentage +
+                    "%)<br>" +
+                    "Please try again.";
+
+                document.getElementById("certificateButton").style.display =
+                    "none";
+
+            }
+
+        }
+
+        function generateCertificate() {
+
+            const passed = localStorage.getItem(
+                "assessmentPassed_" + courseName
+            );
+
+            if (passed === "true") {
+
+                localStorage.setItem(
+                    "certificateCourse",
+                    courseName
+                );
+
+                window.location.href = "certificate.html";
+
+            } else {
+
+                alert("Please pass the assessment first.");
+
+            }
+
+        }
+
+        loadQuestions();
+
+    </script>
+
+</body>
+
+</html>

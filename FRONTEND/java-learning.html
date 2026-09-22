@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Java Learning - SwapSkill</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #172b4d;
+        }
+
+        header {
+            background-color: #ffffff;
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #172b4d;
+        }
+
+        .logo span {
+            color: #e5b93f;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #172b4d;
+            margin-left: 22px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #e5b93f;
+        }
+
+        .hero {
+            background-color: #172b4d;
+            color: #ffffff;
+            text-align: center;
+            padding: 65px 20px;
+        }
+
+        .hero h1 {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 18px;
+        }
+
+        .container {
+            padding: 45px 7%;
+        }
+
+        .container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 30px;
+        }
+
+        .progress-container {
+            margin: 0 auto 40px;
+            max-width: 800px;
+            padding: 25px;
+            border: 1px solid #e8e8e8;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .progress-container h3 {
+            margin-bottom: 15px;
+        }
+
+        .progress-background {
+            width: 100%;
+            height: 22px;
+            background-color: #eeeeee;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: #e5b93f;
+            transition: width 0.4s ease;
+        }
+
+        #progressText {
+            display: block;
+            margin-top: 12px;
+            font-weight: bold;
+        }
+
+        .modules {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .module-card {
+            background-color: #ffffff;
+            border: 1px solid #e8e8e8;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .module-card h3 {
+            margin-bottom: 12px;
+            color: #172b4d;
+        }
+
+        .module-card p {
+            line-height: 1.6;
+            margin-bottom: 18px;
+            color: #555555;
+        }
+
+        .module-card button,
+        .lesson-button {
+            background-color: #e5b93f;
+            color: #172b4d;
+            border: none;
+            padding: 11px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .module-card button:hover,
+        .lesson-button:hover {
+            background-color: #172b4d;
+            color: #ffffff;
+        }
+
+        .completed-label {
+            color: green;
+            font-weight: bold;
+            margin-top: 12px;
+        }
+
+        .lesson-area {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            border-radius: 15px;
+            background-color: #f8f8f8;
+            border-left: 6px solid #e5b93f;
+        }
+
+        .lesson-area h2 {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .lesson-area p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .lesson-area ul {
+            margin-left: 25px;
+            line-height: 2;
+        }
+
+        .code-box {
+            background-color: #172b4d;
+            color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .lesson-button {
+            margin-top: 25px;
+            margin-right: 10px;
+        }
+
+        .close-button {
+            background-color: #172b4d;
+            color: #ffffff;
+        }
+
+        #certificateButton {
+            display: none;
+            margin: 35px auto;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 25px;
+            background-color: #e5b93f;
+            color: #172b4d;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #certificateButton:hover {
+            background-color: #172b4d;
+            color: #ffffff;
+        }
+
+        #completionMessage {
+            text-align: center;
+            color: green;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        footer {
+            background-color: #172b4d;
+            color: #ffffff;
+            text-align: center;
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        footer p {
+            margin: 8px 0;
+        }
+
+        @media (max-width: 900px) {
+            .modules {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 5px;
+                display: inline-block;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .modules {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Swap<span>Skill</span></div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="skills.html">Explore Skills</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="login.html">Login</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1>Java Learning Path</h1>
+    <p>Learn Java from basics to object-oriented programming.</p>
+</section>
+
+<section class="container">
+
+    <h2>Java Course Modules</h2>
+
+    <div class="progress-container">
+        <h3>Your Course Progress</h3>
+
+        <div class="progress-background">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <span id="progressText">0% Completed</span>
+    </div>
+
+    <div class="modules">
+
+        <div class="module-card">
+            <h3>1. Java Fundamentals</h3>
+            <p>Learn Java introduction, variables, data types, operators and input/output.</p>
+            <button onclick="showLesson(0)">Start Learning</button>
+            <p class="completed-label" id="status0"></p>
+        </div>
+
+        <div class="module-card">
+            <h3>2. Control Statements</h3>
+            <p>Understand if, else, switch, for loop, while loop and do-while loop.</p>
+            <button onclick="showLesson(1)">Start Learning</button>
+            <p class="completed-label" id="status1"></p>
+        </div>
+
+        <div class="module-card">
+            <h3>3. Arrays and Strings</h3>
+            <p>Learn how to store and work with multiple values and text.</p>
+            <button onclick="showLesson(2)">Start Learning</button>
+            <p class="completed-label" id="status2"></p>
+        </div>
+
+        <div class="module-card">
+            <h3>4. Methods</h3>
+            <p>Understand methods, parameters, return values and method calling.</p>
+            <button onclick="showLesson(3)">Start Learning</button>
+            <p class="completed-label" id="status3"></p>
+        </div>
+
+        <div class="module-card">
+            <h3>5. Object-Oriented Programming</h3>
+            <p>Learn classes, objects, inheritance, polymorphism and encapsulation.</p>
+            <button onclick="showLesson(4)">Start Learning</button>
+            <p class="completed-label" id="status4"></p>
+        </div>
+
+        <div class="module-card">
+            <h3>6. Practice Programs</h3>
+            <p>Practice simple Java programs to improve your coding skills.</p>
+            <button onclick="showLesson(5)">Start Learning</button>
+            <p class="completed-label" id="status5"></p>
+        </div>
+
+    </div>
+
+    <div class="lesson-area" id="lessonArea">
+        <h2 id="lessonTitle"></h2>
+        <div id="lessonContent"></div>
+
+        <button class="lesson-button" id="completeButton" onclick="completeLesson()">
+            Complete Lesson
+        </button>
+
+        <button class="lesson-button close-button" onclick="closeLesson()">
+            Close Lesson
+        </button>
+    </div>
+
+    <p id="completionMessage"></p>
+
+    <button id="certificateButton" onclick="generateCertificate()">
+        Take Assessment
+    </button>
+
+</section>
+
+<footer>
+    <p>&copy; 2026 SwapSkill</p>
+    <p>Learn. Share. Grow together.</p>
+</footer>
+
+<script>
+    const lessons = [
+        {
+            title: "Java Fundamentals",
+            content: `
+                <p>Java is a popular, object-oriented programming language.</p>
+
+                <p><strong>Main topics:</strong></p>
+
+                <ul>
+                    <li>Introduction to Java</li>
+                    <li>Variables</li>
+                    <li>Data types</li>
+                    <li>Operators</li>
+                    <li>Input and output</li>
+                </ul>
+
+                <div class="code-box">
+public class Main {
+    public static void main(String[] args) {
+        int age = 19;
+        System.out.println("My age is " + age);
+    }
+}
+                </div>
+            `
+        },
+        {
+            title: "Control Statements",
+            content: `
+                <p>Control statements are used to control the flow of a program.</p>
+
+                <ul>
+                    <li>if statement</li>
+                    <li>if-else statement</li>
+                    <li>switch statement</li>
+                    <li>for loop</li>
+                    <li>while loop</li>
+                    <li>do-while loop</li>
+                </ul>
+
+                <div class="code-box">
+public class Main {
+    public static void main(String[] args) {
+        int number = 10;
+
+        if (number > 0) {
+            System.out.println("Positive number");
+        } else {
+            System.out.println("Negative number");
+        }
+    }
+}
+                </div>
+            `
+        },
+        {
+            title: "Arrays and Strings",
+            content: `
+                <p>Arrays are used to store multiple values of the same type.</p>
+
+                <p>Strings are used to store text.</p>
+
+                <div class="code-box">
+public class Main {
+    public static void main(String[] args) {
+        int[] numbers = {10, 20, 30};
+
+        String name = "Java";
+
+        System.out.println(numbers[0]);
+        System.out.println(name);
+    }
+}
+                </div>
+            `
+        },
+        {
+            title: "Methods in Java",
+            content: `
+                <p>A method is a block of code that performs a specific task.</p>
+
+                <ul>
+                    <li>Method declaration</li>
+                    <li>Method calling</li>
+                    <li>Parameters</li>
+                    <li>Return values</li>
+                </ul>
+
+                <div class="code-box">
+public class Main {
+
+    static void greet() {
+        System.out.println("Welcome to Java");
+    }
+
+    public static void main(String[] args) {
+        greet();
+    }
+}
+                </div>
+            `
+        },
+        {
+            title: "Object-Oriented Programming",
+            content: `
+                <p>Object-oriented programming is based on classes and objects.</p>
+
+                <ul>
+                    <li>Class and object</li>
+                    <li>Inheritance</li>
+                    <li>Polymorphism</li>
+                    <li>Encapsulation</li>
+                    <li>Abstraction</li>
+                </ul>
+
+                <div class="code-box">
+class Student {
+    String name = "Chitra";
+
+    void display() {
+        System.out.println(name);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Student student = new Student();
+        student.display();
+    }
+}
+                </div>
+            `
+        },
+        {
+            title: "Java Practice Programs",
+            content: `
+                <p>Practice these beginner-friendly Java programs:</p>
+
+                <ul>
+                    <li>Print Hello World</li>
+                    <li>Find the largest of two numbers</li>
+                    <li>Check whether a number is even or odd</li>
+                    <li>Find the factorial of a number</li>
+                    <li>Reverse a number</li>
+                    <li>Check whether a number is prime</li>
+                    <li>Find the sum of array elements</li>
+                </ul>
+
+                <div class="code-box">
+public class Main {
+    public static void main(String[] args) {
+        int number = 8;
+
+        if (number % 2 == 0) {
+            System.out.println("Even number");
+        } else {
+            System.out.println("Odd number");
+        }
+    }
+}
+                </div>
+            `
+        }
+    ];
+
+    let completedLessons = JSON.parse(
+        localStorage.getItem("javaCompletedLessons") || "[]"
+    );
+
+    let currentLesson = -1;
+
+    function showLesson(index) {
+        currentLesson = index;
+
+        document.getElementById("lessonTitle").textContent =
+            lessons[index].title;
+
+        document.getElementById("lessonContent").innerHTML =
+            lessons[index].content;
+
+        const completeButton = document.getElementById("completeButton");
+
+        if (completedLessons.includes(index)) {
+            completeButton.textContent = "Lesson Completed";
+            completeButton.disabled = true;
+        } else {
+            completeButton.textContent = "Complete Lesson";
+            completeButton.disabled = false;
+        }
+
+        document.getElementById("lessonArea").style.display = "block";
+
+        document.getElementById("lessonArea").scrollIntoView({
+            behavior: "smooth"
+        });
+    }
+
+    function completeLesson() {
+        if (currentLesson === -1) {
+            return;
+        }
+
+        if (!completedLessons.includes(currentLesson)) {
+            completedLessons.push(currentLesson);
+
+            localStorage.setItem(
+                "javaCompletedLessons",
+                JSON.stringify(completedLessons)
+            );
+        }
+
+        updateProgress();
+
+        document.getElementById("completeButton").textContent =
+            "Lesson Completed";
+
+        document.getElementById("completeButton").disabled = true;
+    }
+
+    function updateProgress() {
+        const totalLessons = lessons.length;
+        const completedCount = completedLessons.length;
+
+        const progress = Math.round(
+            (completedCount / totalLessons) * 100
+        );
+
+        document.getElementById("progressBar").style.width =
+            progress + "%";
+
+        document.getElementById("progressText").textContent =
+            progress + "% Completed";
+
+        for (let i = 0; i < totalLessons; i++) {
+            document.getElementById("status" + i).textContent =
+                completedLessons.includes(i)
+                    ? "✓ Completed"
+                    : "";
+        }
+
+        if (progress === 100) {
+            document.getElementById("completionMessage").textContent =
+                "Congratulations! You completed the Java course.";
+
+            document.getElementById("certificateButton").style.display =
+                "block";
+
+            localStorage.setItem("javaCourseCompleted", "true");
+        }
+    }
+
+    function closeLesson() {
+        document.getElementById("lessonArea").style.display = "none";
+    }
+
+    function generateCertificate() {
+        if (completedLessons.length === lessons.length) {
+            localStorage.setItem("courseCompleted", "true");
+            localStorage.setItem("certificateCourse", "Java");
+
+            window.location.href = "assessment.html";
+        }
+    }
+
+    updateProgress();
+</script>
+
+</body>
+</html>

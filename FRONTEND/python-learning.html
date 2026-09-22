@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Python Learning - SwapSkill</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #172b4d;
+        }
+
+        header {
+            background-color: #ffffff;
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #172b4d;
+        }
+
+        .logo span {
+            color: #e5b93f;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #172b4d;
+            margin-left: 22px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #e5b93f;
+        }
+
+        .hero {
+            background-color: #172b4d;
+            color: white;
+            text-align: center;
+            padding: 65px 20px;
+        }
+
+        .hero h1 {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 18px;
+        }
+
+        .container {
+            padding: 45px 7%;
+        }
+
+        .container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 30px;
+        }
+
+        .progress-box {
+            background-color: #fff8d8;
+            border: 1px solid #e5b93f;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .progress-box p {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 14px;
+            background-color: #eeeeee;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: #e5b93f;
+            transition: width 0.3s ease;
+        }
+
+        .modules {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .module-card {
+            background-color: #ffffff;
+            border: 1px solid #e8e8e8;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            transition: 0.3s;
+        }
+
+        .module-card h3 {
+            margin-bottom: 12px;
+            color: #172b4d;
+        }
+
+        .module-card p {
+            line-height: 1.6;
+            margin-bottom: 18px;
+            color: #555555;
+        }
+
+        button {
+            background-color: #e5b93f;
+            color: #172b4d;
+            border: none;
+            padding: 11px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #172b4d;
+            color: white;
+        }
+
+        .lesson-area {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            border-radius: 15px;
+            background-color: #f8f8f8;
+            border-left: 6px solid #e5b93f;
+        }
+
+        .lesson-area h2 {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .lesson-area p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .lesson-area ul {
+            margin-left: 25px;
+            line-height: 2;
+        }
+
+        .code-box {
+            background-color: #172b4d;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        .lesson-actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .completed-label {
+            display: inline-block;
+            margin-top: 15px;
+            color: green;
+            font-weight: bold;
+        }
+
+        #certificateButton {
+            display: none;
+            margin: 30px auto 0;
+        }
+
+        footer {
+            background-color: #172b4d;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        footer p {
+            margin: 8px 0;
+        }
+
+        @media (max-width: 900px) {
+            .modules {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 5px;
+                display: inline-block;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .modules {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">Swap<span>Skill</span></div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="skills.html">Explore Skills</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="login.html">Login</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Python Learning Path</h1>
+        <p>Learn Python from basics to advanced programming concepts.</p>
+    </section>
+
+    <section class="container">
+
+        <h2>Python Course Modules</h2>
+
+        <div class="progress-box">
+            <p id="progressText">Progress: 0 / 6 lessons completed</p>
+
+            <div class="progress-track">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+
+        <div class="modules">
+
+            <div class="module-card">
+                <h3>1. Python Fundamentals</h3>
+                <p>Learn Python introduction, variables, data types and basic syntax.</p>
+
+                <button onclick="showLesson('fundamentals', 0)">
+                    Start Learning
+                </button>
+            </div>
+
+            <div class="module-card">
+                <h3>2. Conditional Statements</h3>
+                <p>Understand if, elif, else and decision-making statements.</p>
+
+                <button onclick="showLesson('conditions', 1)">
+                    Start Learning
+                </button>
+            </div>
+
+            <div class="module-card">
+                <h3>3. Loops</h3>
+                <p>Learn for loops, while loops and loop control statements.</p>
+
+                <button onclick="showLesson('loops', 2)">
+                    Start Learning
+                </button>
+            </div>
+
+            <div class="module-card">
+                <h3>4. Lists and Strings</h3>
+                <p>Learn lists, tuples, dictionaries and strings.</p>
+
+                <button onclick="showLesson('lists', 3)">
+                    Start Learning
+                </button>
+            </div>
+
+            <div class="module-card">
+                <h3>5. Functions and OOP</h3>
+                <p>Understand functions, classes, objects and OOP concepts.</p>
+
+                <button onclick="showLesson('functions', 4)">
+                    Start Learning
+                </button>
+            </div>
+
+            <div class="module-card">
+                <h3>6. Practice Programs</h3>
+                <p>Practice beginner-friendly Python coding programs.</p>
+
+                <button onclick="showLesson('practice', 5)">
+                    Start Learning
+                </button>
+            </div>
+
+        </div>
+
+        <div class="lesson-area" id="lessonArea">
+
+            <h2 id="lessonTitle"></h2>
+
+            <div id="lessonContent"></div>
+
+            <div class="lesson-actions">
+
+                <button id="completeButton" onclick="completeCurrentLesson()">
+                    Complete Lesson
+                </button>
+
+                <button onclick="closeLesson()">
+                    Close Lesson
+                </button>
+
+            </div>
+
+            <div class="completed-label" id="completedLabel"></div>
+
+        </div>
+
+        <button id="certificateButton" onclick="takeAssessment()">
+            Take Assessment
+        </button>
+
+    </section>
+
+    <footer>
+        <p>&copy; 2026 SwapSkill</p>
+        <p>Learn. Share. Grow together.</p>
+    </footer>
+
+    <script>
+
+        const totalLessons = 6;
+
+        let currentLessonIndex = null;
+
+        let completedLessons = JSON.parse(
+            localStorage.getItem("pythonCompletedLessons") || "[]"
+        );
+
+        function showLesson(moduleName, lessonIndex) {
+
+            const lessonArea = document.getElementById("lessonArea");
+            const lessonTitle = document.getElementById("lessonTitle");
+            const lessonContent = document.getElementById("lessonContent");
+            const completeButton = document.getElementById("completeButton");
+            const completedLabel = document.getElementById("completedLabel");
+
+            currentLessonIndex = lessonIndex;
+
+            let title = "";
+            let content = "";
+
+            if (moduleName === "fundamentals") {
+
+                title = "Python Fundamentals";
+
+                content = `
+                    <p>Python is a simple and powerful programming language.</p>
+
+                    <p><strong>Main Topics:</strong></p>
+
+                    <ul>
+                        <li>Introduction to Python</li>
+                        <li>Variables</li>
+                        <li>Data Types</li>
+                        <li>Basic Syntax</li>
+                        <li>Input and Output</li>
+                    </ul>
+
+                    <div class="code-box">name = "Chitra"
+age = 19
+
+print("My name is", name)
+print("My age is", age)</div>
+                `;
+
+            }
+
+            else if (moduleName === "conditions") {
+
+                title = "Conditional Statements";
+
+                content = `
+                    <p>Conditional statements are used to make decisions in Python.</p>
+
+                    <ul>
+                        <li>if statement</li>
+                        <li>if-else statement</li>
+                        <li>if-elif-else statement</li>
+                    </ul>
+
+                    <div class="code-box">number = 10
+
+if number > 0:
+    print("Positive number")
+elif number < 0:
+    print("Negative number")
+else:
+    print("Zero")</div>
+                `;
+
+            }
+
+            else if (moduleName === "loops") {
+
+                title = "Loops in Python";
+
+                content = `
+                    <p>Loops are used to execute a block of code repeatedly.</p>
+
+                    <ul>
+                        <li>for loop</li>
+                        <li>while loop</li>
+                        <li>break statement</li>
+                        <li>continue statement</li>
+                    </ul>
+
+                    <div class="code-box">for number in range(1, 6):
+    print(number)</div>
+                `;
+
+            }
+
+            else if (moduleName === "lists") {
+
+                title = "Lists and Strings";
+
+                content = `
+                    <p>Lists are used to store multiple values in Python.</p>
+
+                    <p>Strings are used to store text.</p>
+
+                    <ul>
+                        <li>Lists</li>
+                        <li>Tuples</li>
+                        <li>Dictionaries</li>
+                        <li>Strings</li>
+                    </ul>
+
+                    <div class="code-box">numbers = [10, 20, 30, 40]
+name = "Python"
+
+print(numbers)
+print(numbers[0])
+print(name)</div>
+                `;
+
+            }
+
+            else if (moduleName === "functions") {
+
+                title = "Functions and Object-Oriented Programming";
+
+                content = `
+                    <p>Functions are reusable blocks of code.</p>
+
+                    <p>Object-oriented programming uses classes and objects.</p>
+
+                    <ul>
+                        <li>Function declaration</li>
+                        <li>Function calling</li>
+                        <li>Parameters</li>
+                        <li>Return values</li>
+                        <li>Classes and Objects</li>
+                    </ul>
+
+                    <div class="code-box">def greet():
+    print("Welcome to Python")
+
+greet()
+
+
+class Student:
+
+    def display(self):
+        print("Student details")
+
+
+student = Student()
+student.display()</div>
+                `;
+
+            }
+
+            else if (moduleName === "practice") {
+
+                title = "Python Practice Programs";
+
+                content = `
+                    <p>Practice these beginner-friendly Python programs:</p>
+
+                    <ul>
+                        <li>Print Hello World</li>
+                        <li>Find the largest of two numbers</li>
+                        <li>Check even or odd</li>
+                        <li>Find factorial of a number</li>
+                        <li>Reverse a number</li>
+                        <li>Check prime number</li>
+                        <li>Find sum of list elements</li>
+                    </ul>
+
+                    <div class="code-box">number = 8
+
+if number % 2 == 0:
+    print("Even number")
+else:
+    print("Odd number")</div>
+                `;
+
+            }
+
+            lessonTitle.textContent = title;
+
+            lessonContent.innerHTML = content;
+
+            if (completedLessons.includes(lessonIndex)) {
+
+                completeButton.textContent = "Lesson Completed";
+
+                completedLabel.textContent =
+                    "This lesson is already completed.";
+
+            } else {
+
+                completeButton.textContent = "Complete Lesson";
+
+                completedLabel.textContent = "";
+
+            }
+
+            lessonArea.style.display = "block";
+
+            lessonArea.scrollIntoView({
+                behavior: "smooth"
+            });
+
+        }
+
+        function completeCurrentLesson() {
+
+            if (currentLessonIndex === null) {
+
+                alert("Please open a lesson first.");
+
+                return;
+            }
+
+            if (!completedLessons.includes(currentLessonIndex)) {
+
+                completedLessons.push(currentLessonIndex);
+
+                localStorage.setItem(
+                    "pythonCompletedLessons",
+                    JSON.stringify(completedLessons)
+                );
+
+                alert("Lesson completed successfully!");
+
+            } else {
+
+                alert("This lesson is already completed.");
+
+            }
+
+            updateProgress();
+
+            updateLessonButton();
+
+            if (completedLessons.length === totalLessons) {
+
+                localStorage.setItem(
+                    "pythonCourseCompleted",
+                    "true"
+                );
+
+                alert("Congratulations! You completed the Python course.");
+
+            }
+
+        }
+
+        function updateLessonButton() {
+
+            const completeButton =
+                document.getElementById("completeButton");
+
+            const completedLabel =
+                document.getElementById("completedLabel");
+
+            if (completedLessons.includes(currentLessonIndex)) {
+
+                completeButton.textContent = "Lesson Completed";
+
+                completedLabel.textContent =
+                    "This lesson is completed.";
+
+            } else {
+
+                completeButton.textContent = "Complete Lesson";
+
+                completedLabel.textContent = "";
+
+            }
+
+        }
+
+        function updateProgress() {
+
+            const completedCount = completedLessons.length;
+
+            const percentage =
+                (completedCount / totalLessons) * 100;
+
+            document.getElementById("progressText").textContent =
+                "Progress: " + completedCount +
+                " / " + totalLessons +
+                " lessons completed";
+
+            document.getElementById("progressBar").style.width =
+                percentage + "%";
+
+            const certificateButton =
+                document.getElementById("certificateButton");
+
+            if (completedCount === totalLessons) {
+
+                certificateButton.style.display = "block";
+
+            } else {
+
+                certificateButton.style.display = "none";
+
+            }
+
+        }
+
+        function closeLesson() {
+
+            document.getElementById("lessonArea").style.display = "none";
+
+            currentLessonIndex = null;
+
+        }
+
+        function takeAssessment() {
+
+            if (completedLessons.length === totalLessons) {
+
+                localStorage.setItem("courseCompleted", "true");
+
+                localStorage.setItem(
+                    "certificateCourse",
+                    "Python"
+                );
+
+                window.location.href = "assessment.html";
+
+            } else {
+
+                alert("Please complete all Python lessons first.");
+
+            }
+
+        }
+
+        updateProgress();
+
+    </script>
+
+</body>
+
+</html>

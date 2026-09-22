@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Swap Skill Admin</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f8f9fc;
+            color: #172b4d;
+        }
+
+        .sidebar {
+            position: fixed;
+            width: 240px;
+            height: 100vh;
+            background: #172b4d;
+            color: white;
+            padding: 25px 15px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            color: #f4c95d;
+            margin-bottom: 35px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 14px;
+            margin: 8px 0;
+            border-radius: 8px;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #f4c95d;
+            color: #172b4d;
+        }
+
+        .main {
+            margin-left: 240px;
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .card h2 {
+            margin-bottom: 20px;
+            color: #172b4d;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        .checkbox-group {
+            margin: 15px 0;
+        }
+
+        .checkbox-group input {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        button {
+            background: #f4c95d;
+            color: #172b4d;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #e6b83f;
+        }
+
+        .danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .danger:hover {
+            background: #bb2d3b;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <h2>Swap Skill</h2>
+
+        <a href="admin-dashboard.html">Dashboard</a>
+        <a href="users.html">Manage Users</a>
+        <a href="manage-skills.html">Manage Skills</a>
+        <a href="reports.html">Reports</a>
+        <a href="settings.html" class="active">Settings</a>
+        <a href="index.html">Logout</a>
+    </div>
+
+    <div class="main">
+
+        <div class="header">
+            <h1>Settings</h1>
+            <span>Admin Panel</span>
+        </div>
+
+        <div class="card">
+            <h2>Admin Profile</h2>
+
+            <div class="form-group">
+                <label>Admin Name</label>
+                <input type="text" id="adminName" value="Admin">
+            </div>
+
+            <div class="form-group">
+                <label>Admin Email</label>
+                <input type="email" id="adminEmail" value="admin@swapskill.com">
+            </div>
+
+            <button onclick="saveProfile()">Save Profile</button>
+        </div>
+
+        <div class="card">
+            <h2>Change Password</h2>
+
+            <div class="form-group">
+                <label>Current Password</label>
+                <input type="password" id="currentPassword">
+            </div>
+
+            <div class="form-group">
+                <label>New Password</label>
+                <input type="password" id="newPassword">
+            </div>
+
+            <div class="form-group">
+                <label>Confirm New Password</label>
+                <input type="password" id="confirmPassword">
+            </div>
+
+            <button onclick="changePassword()">Change Password</button>
+        </div>
+
+        <div class="card">
+            <h2>Notification Settings</h2>
+
+            <div class="checkbox-group">
+                <label>
+                    <input type="checkbox" checked>
+                    Receive new user notifications
+                </label>
+            </div>
+
+            <div class="checkbox-group">
+                <label>
+                    <input type="checkbox" checked>
+                    Receive skill exchange notifications
+                </label>
+            </div>
+
+            <div class="checkbox-group">
+                <label>
+                    <input type="checkbox">
+                    Receive weekly reports
+                </label>
+            </div>
+
+            <button onclick="saveNotifications()">Save Notifications</button>
+        </div>
+
+        <div class="card">
+            <h2>Platform Settings</h2>
+
+            <div class="form-group">
+                <label>Platform Name</label>
+                <input type="text" id="platformName" value="Swap Skill">
+            </div>
+
+            <div class="form-group">
+                <label>Platform Status</label>
+                <select id="platformStatus">
+                    <option value="active">Active</option>
+                    <option value="maintenance">Maintenance</option>
+                </select>
+            </div>
+
+            <button onclick="savePlatform()">Save Platform Settings</button>
+        </div>
+
+    </div>
+
+    <script>
+        function saveProfile() {
+            const name = document.getElementById("adminName").value;
+            const email = document.getElementById("adminEmail").value;
+
+            if (name === "" || email === "") {
+                alert("Please fill all profile details");
+                return;
+            }
+
+            alert("Admin profile saved successfully!");
+        }
+
+        function changePassword() {
+            const currentPassword =
+                document.getElementById("currentPassword").value;
+
+            const newPassword =
+                document.getElementById("newPassword").value;
+
+            const confirmPassword =
+                document.getElementById("confirmPassword").value;
+
+            if (
+                currentPassword === "" ||
+                newPassword === "" ||
+                confirmPassword === ""
+            ) {
+                alert("Please fill all password fields");
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                alert("New passwords do not match");
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                alert("Password must contain at least 6 characters");
+                return;
+            }
+
+            alert("Password changed successfully! Demo only.");
+        }
+
+        function saveNotifications() {
+            alert("Notification settings saved successfully!");
+        }
+
+        function savePlatform() {
+            const platformName =
+                document.getElementById("platformName").value;
+
+            const platformStatus =
+                document.getElementById("platformStatus").value;
+
+            if (platformName === "") {
+                alert("Please enter platform name");
+                return;
+            }
+
+            alert(
+                "Platform settings saved!\nName: " +
+                platformName +
+                "\nStatus: " +
+                platformStatus
+            );
+        }
+    </script>
+
+</body>
+</html>

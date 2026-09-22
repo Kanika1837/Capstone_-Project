@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share a Skill - SwapSkill</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #ffffff;
+            color: #172b4d;
+        }
+
+        header {
+            padding: 20px 7%;
+            background: #ffffff;
+            box-shadow: 0 2px 10px #ddd;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #e5b93f;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px #ddd;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 13px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        textarea {
+            height: 120px;
+            resize: none;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            border-radius: 25px;
+            background: #e5b93f;
+            color: #172b4d;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #172b4d;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">Swap<span>Skill</span></div>
+    </header>
+
+    <div class="container">
+        <h1>Share a Skill</h1>
+
+        <form onsubmit="shareSkill(event)">
+            <label>Skill Name</label>
+            <input type="text" id="skillName" placeholder="Enter your skill" required>
+
+            <label>Skill Category</label>
+            <select id="category" required>
+                <option value="">Select category</option>
+                <option value="Technical">Technical</option>
+                <option value="Non-Technical">Non-Technical</option>
+            </select>
+
+            <label>Description</label>
+            <textarea id="description" placeholder="Describe your skill" required></textarea>
+
+            <button type="submit">Share Skill</button>
+        </form>
+    </div>
+
+    <script>
+        function shareSkill(event) {
+            event.preventDefault();
+
+            const skill = {
+                name: document.getElementById("skillName").value,
+                category: document.getElementById("category").value,
+                description: document.getElementById("description").value
+            };
+
+            localStorage.setItem("sharedSkill", JSON.stringify(skill));
+
+            alert("Skill shared successfully!");
+            window.location.href = "dashboard.html";
+        }
+    </script>
+
+</body>
+</html>

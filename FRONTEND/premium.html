@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium - Swap Skill</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f8f9fc;
+            color: #172b4d;
+        }
+
+        header {
+            background: #172b4d;
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            color: #f4c95d;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        header a:hover {
+            color: #f4c95d;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #777;
+            margin-bottom: 35px;
+        }
+
+        .plans {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .plan {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .plan.featured {
+            border: 3px solid #f4c95d;
+        }
+
+        .plan h3 {
+            font-size: 25px;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 35px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #172b4d;
+        }
+
+        .plan ul {
+            list-style: none;
+            text-align: left;
+            margin: 25px 0;
+        }
+
+        .plan li {
+            margin: 15px 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #172b4d;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #f4c95d;
+            color: #172b4d;
+        }
+
+        .payment-box {
+            display: none;
+            background: white;
+            max-width: 500px;
+            margin: 35px auto;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            text-align: left;
+        }
+
+        .payment-box h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+        }
+
+        .note {
+            margin-top: 20px;
+            color: #777;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 20px;
+            }
+
+            .plans {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Swap Skill</h1>
+
+        <nav>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="conversations.html">Conversations</a>
+            <a href="certificate.html">Certificate</a>
+            <a href="index.html">Logout</a>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <h2>Choose Your Plan</h2>
+
+        <p class="subtitle">
+            Learn more, share more, and grow together with Swap Skill.
+        </p>
+
+        <div class="plans">
+
+            <div class="plan">
+
+                <h3>Free Trial</h3>
+
+                <div class="price">₹0</div>
+
+                <p>7 Days</p>
+
+                <ul>
+                    <li>✅ Basic skill access</li>
+                    <li>✅ Chat with users</li>
+                    <li>✅ Skill exchange</li>
+                    <li>✅ 7-day access</li>
+                </ul>
+
+                <button onclick="startTrial()">
+                    Start Free Trial
+                </button>
+
+            </div>
+
+            <div class="plan featured">
+
+                <h3>Premium</h3>
+
+                <div class="price">₹199</div>
+
+                <p>Per Month</p>
+
+                <ul>
+                    <li>✅ Unlimited skill access</li>
+                    <li>✅ Unlimited conversations</li>
+                    <li>✅ Certificate generation</li>
+                    <li>✅ Premium support</li>
+                </ul>
+
+                <button onclick="showPayment('Premium Plan - ₹199')">
+                    Choose Premium
+                </button>
+
+            </div>
+
+            <div class="plan">
+
+                <h3>Yearly</h3>
+
+                <div class="price">₹1,999</div>
+
+                <p>Per Year</p>
+
+                <ul>
+                    <li>✅ All premium features</li>
+                    <li>✅ Annual membership</li>
+                    <li>✅ Priority support</li>
+                    <li>✅ Extra benefits</li>
+                </ul>
+
+                <button onclick="showPayment('Yearly Plan - ₹1999')">
+                    Choose Yearly
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="payment-box" id="paymentBox">
+
+            <h2 id="paymentTitle">Payment Details</h2>
+
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="fullName" placeholder="Enter your name">
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="email" placeholder="Enter your email">
+            </div>
+
+            <div class="form-group">
+                <label>Payment Method</label>
+
+                <select id="paymentMethod">
+                    <option value="">Select payment method</option>
+                    <option value="UPI">UPI</option>
+                    <option value="Card">Debit / Credit Card</option>
+                    <option value="Net Banking">Net Banking</option>
+                </select>
+            </div>
+
+            <button onclick="makePayment()">
+                Continue Payment
+            </button>
+
+            <p class="note">
+                Demo payment page. No real money will be charged.
+            </p>
+
+        </div>
+
+    </div>
+
+    <script>
+        let selectedPlan = "";
+
+        function startTrial() {
+            alert("Your 7-day free trial has been activated! Demo only.");
+        }
+
+        function showPayment(planName) {
+            selectedPlan = planName;
+
+            document.getElementById("paymentTitle").innerText =
+                "Payment - " + planName;
+
+            document.getElementById("paymentBox").style.display = "block";
+
+            document.getElementById("paymentBox").scrollIntoView({
+                behavior: "smooth"
+            });
+        }
+
+        function makePayment() {
+            const name = document.getElementById("fullName").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const method = document.getElementById("paymentMethod").value;
+
+            if (name === "" || email === "" || method === "") {
+                alert("Please fill all payment details");
+                return;
+            }
+
+            alert(
+                "Payment initiated successfully!\n\n" +
+                "Plan: " + selectedPlan +
+                "\nName: " + name +
+                "\nPayment Method: " + method +
+                "\n\nDemo only. No real payment was made."
+            );
+        }
+    </script>
+
+</body>
+
+</html>

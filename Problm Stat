@@ -1,0 +1,76 @@
+# Problem Statement
+
+## 1. Title
+SkillSwap – Skills Exchange and Learning Platform
+
+## 2. Domain
+Education Technology (EdTech) / Skill Development
+
+## 3. Who is the User?
+- **Learner** – Wants to learn new skills.
+- **Mentor** – Wants to teach or share skills.
+- **Admin** – Manages users, skills, and platform activities.
+
+## 4. What Problem Are We Solving?
+People often struggle to find the right person to learn a skill from, while
+many skilled people lack a simple way to share their knowledge. SkillSwap
+connects learners and mentors to exchange skills, schedule sessions, and
+track learning progress.
+
+## 5. Proposed Solution
+SkillSwap provides a platform to:
+- Create user profiles
+- Add skills to teach and learn
+- Search and match with suitable users
+- Send and manage skill-exchange requests
+- Schedule learning sessions
+- Track progress
+- Give ratings and reviews
+- Receive notifications
+
+## 6. Core Entities / Database Tables
+- **Users**
+- **Skills**
+- **User_Skills**
+- **Exchange_Requests**
+- **Learning_Sessions**
+- **Learning_Progress**
+- **Ratings_Reviews**
+- **Notifications**
+
+## 7. User Roles & Permissions
+
+**Learner**
+- Search skills, send requests, attend sessions, track progress.
+
+**Mentor**
+- Add skills, manage requests, conduct sessions, receive reviews.
+
+**Admin**
+- Manage users, skills, reports, and platform activities.
+
+## 8. Success Criteria
+- Real skill-exchange business logic.
+- Minimum **5 related database tables**.
+- Minimum **2 user roles**.
+- Skill search, matching, requests, and session scheduling.
+- Learning progress and reviews.
+- Scope for **one third-party integration**.
+- Natural scope for a future **AI recommendation feature**.
+
+## 9. Out of Scope
+- Online payments
+- Custom video-conferencing
+- Professional certification
+- Job placement
+- Large-scale paid course hosting
+
+## 10. Chosen Track
+**Java (Spring Boot) + React + MySQL**
+
+- Frontend: React
+- Backend: Spring Boot
+- Database: MySQL
+- API: REST API
+- Authentication: JWT
+- Future AI: Skill/Mentor Recommendation
